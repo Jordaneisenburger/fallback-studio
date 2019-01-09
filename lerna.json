@@ -1,0 +1,13 @@
+{
+    "version": "0.0.1",
+    "packages": [
+        "src/pwa-studio/packages/peregrine",
+        "src/pwa-studio/packages/pwa-buildpack",
+        "src/pwa-studio/packages/upward-js",
+        "src/pwa-studio/packages/upward-spec",
+        "src/pwa-studio/packages/venia-concept",
+        "src/example-company/example-shop"
+
+    ],
+    "npmClient": "npm"
+}
