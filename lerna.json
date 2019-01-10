@@ -1,5 +1,5 @@
 {
-    "version": "0.0.1",
+    "version": "1.0.0",
     "packages": [
         "src/pwa-studio/packages/peregrine",
         "src/pwa-studio/packages/pwa-buildpack",
