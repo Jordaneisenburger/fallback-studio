@@ -4,18 +4,16 @@
         "access": "public"
     },
     "version": "2.0.0-rc.17",
-    "description": "Venia PWA Concept Storefront for Magento 2",
-    "license": "(OSL-3.0 OR AFL-3.0)",
-    "author": "Magento Commerce",
+    "description": "Exampel shop",
+    "author": "Jordan Eisenburger",
     "main": "src/index.js",
-    "repository": "github:magento-research/pwa-studio",
+    "repository": "github:jordaneisenburger/fallback-studio",
     "bin": {
         "venia": "../../pwa-studio/packages/venia-concept/bin/venia.js"
     },
     "bugs": {
-        "url": "https://github.com/magento-research/pwa-studio/issues"
+        "url": "https://github.com/jordaneisenburger/fallback-studio/issues"
     },
-    "homepage": "https://github.com/magento-research/pwa-studio/tree/master/packages/venia-concept#readme",
     "scripts": {
         "build": "npx rimraf dist && npm run -s validate-queries && webpack -p --color --progress --profile --env.mode production",
         "build:stats": "npx rimraf dist && mkdir dist && npm run -s validate-queries && webpack -p --color --progress --profile --env.mode production --json > dist/build-stats.json",
