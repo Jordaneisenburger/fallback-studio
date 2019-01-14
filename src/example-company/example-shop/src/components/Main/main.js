@@ -41,7 +41,7 @@ class Main extends Component {
             <main className={classes.root}>
                 <TopBar />
                 <Header />
-                <article className={classes.page}>{children}</article>
+                <div className={classes.page}>{children}</div>
                 <Footer />
             </main>
         );
