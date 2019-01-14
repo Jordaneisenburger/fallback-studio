@@ -12,7 +12,7 @@
         "upgrade:pwa-studio": "rimraf src/pwa-studio && npm run clone:pwa-studio && npm run prepare:pwa-studio && npm run clean:pwa-studio && npm install && npm run build",
         "prepare:pwa-studio": "cd src/pwa-studio && cp packages/venia-concept/.env.dist packages/venia-concept/.env && rimraf ./.git",
         "build": "npx lerna bootstrap --hoist && npx lerna run --stream build -- -s",
-        "setup": "npm run clone:pwa-studio && npm install && npm run prepare:pwa-studio && npm run build",
+        "setup": "npm install && npm run prepare:pwa-studio && npm run build",
         "watch:venia-concept": "cd src/pwa-studio && npm run watch:venia",
         "watch:example-shop": "cd src/example-company/example-shop && npm run -s watch; cd - >/dev/null"
     },
