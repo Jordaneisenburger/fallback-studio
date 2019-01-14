@@ -1,3 +1,11 @@
+[![node][node]][node-url] [![pwa-studio][pwa-studio]][pwa-studio-url]
+
+[node]: https://img.shields.io/badge/Node-%3E%3D10.14.1-brightgreen.svg
+[node-url]: https://nodejs.org
+
+[pwa-studio]: https://img.shields.io/badge/pwa--studio-v2.0.0--rc.18-brightgreen.svg
+[pwa-studio-url]: https://github.com/magento-research/pwa-studio
+
 # Fallback Studio
 
 Fallback Studio creates a wrapper around [PWA Studio](https://github.com/magento-research/pwa-studio) and provides a
@@ -162,6 +170,11 @@ npm run upgrade:pwa-studio
 **NOTE:**<br/>
 Always check the changes before you update because you might need to make changes to your custom storefront to prevent issues.
 
+
+## TODO
+
+- add simple CLI for creating storefronts
+- get the complete dev experience by working with the watch:all script
 
 
 ## Credits
