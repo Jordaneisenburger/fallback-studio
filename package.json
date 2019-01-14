@@ -9,7 +9,7 @@
         "clean:example-company": "cd src/example-company/example-shop && npm run clean:all",
         "clean:all": "npm run clean:pwa-studio && npm run clean:example-company",
         "clone:pwa-studio": "cd src && git clone https://github.com/magento-research/pwa-studio.git",
-        "upgrade:pwa-studio": "rimraf src/pwa-studio && npm run clone:pwa-studio && npm run prepare:pwa-studio && clean:pwa-studio && npm install && npm run build",
+        "upgrade:pwa-studio": "rimraf src/pwa-studio && npm run clone:pwa-studio && npm run prepare:pwa-studio && npm run clean:pwa-studio && npm install && npm run build",
         "prepare:pwa-studio": "cd src/pwa-studio && cp packages/venia-concept/.env.dist packages/venia-concept/.env && rimraf ./.git",
         "build": "npx lerna bootstrap --hoist && npx lerna run --stream build -- -s",
         "setup": "npm run clone:pwa-studio && npm install && npm run prepare:pwa-studio && npm run build",
