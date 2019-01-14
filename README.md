@@ -85,7 +85,7 @@ const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
 As you can tell this is pretty basic and straightforward. 
 <br/><br/>
 
-###So how about React components?
+### So how about React components?
 
 To do this we again need to take a look at our `webpack.config.js` file but this time we need to scroll down a bit till we get to the `resolve` part that looks like:
 
@@ -113,7 +113,7 @@ I've created a really basic example on how to fallback on `venia-concept` compon
  Now pleas run the follow command from the root directory `npm run watch:example-shop` as you can tell it's pretty much the same as `venia-concept` but we've added a custom `TopBar` component
  and overwritten the `Footer` component and added and extra block of content.
  
- **Lets take a look ath the code:**<br />
+ **Lets take a look at the code:**<br />
  Look at the following folder `src/example-company/example-shop/src/components/Footer` as you can tell we've only copied `index.js` and `footer.js` but we are missing `footer.css` but the styling still works.
  That's because inside `footer.js` we made a little change:
  
@@ -129,7 +129,7 @@ I've created a really basic example on how to fallback on `venia-concept` compon
  So we've changed this component with a custom piece of content 'Custom Example shop' but kept the default styling.
  
  **Another example:**<br/>
- I've created a custom component called `TopBar` this one is not overwritten from `venia-concept`. I want to include this on every page so i've copied the `Main` component from `venia-concept` to our `components` folder.
+ I've created a custom component called `TopBar` this one is not overwritten from `venia-concept` storefront. I want to include this on every page so i've copied the `Main` component from `venia-concept` to our `components` folder.
  
  As you can tell i've added aliases for all components that we are not changing and included my own custom component:
  ```
