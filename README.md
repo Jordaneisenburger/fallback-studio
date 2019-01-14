@@ -77,7 +77,7 @@ const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
 As you can tell this is pretty basic and straightforward. 
 <br/><br/>
 
-####So how about React components?
+###So how about React components?
 
 To do this we again need to take a look at our `webpack.config.js` file but this time we need to scroll down a bit till we get to the `resolve` part that looks like:
 
@@ -158,6 +158,10 @@ To update to the latest `pwa-studio` version you want to run the following comma
 ```
 npm run upgrade:pwa-studio
 ```
+
+**NOTE:**<br/>
+Always check the changes before you update because you might need to make changes to your custom storefront to prevent issues.
+
 
 
 ## Credits
