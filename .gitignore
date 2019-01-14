@@ -10,4 +10,3 @@ storybook-dist
 test-report.xml
 test-results.json
 lerna-debug.log
-src/pwa-studio
