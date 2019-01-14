@@ -35,8 +35,9 @@ Make sure you have the following:
 
 - unix based OS for example MacOS or Linux
 
-## Quick setup 
+## Quick setup
 
+Note: only run commands from the root dir
 
 **step: 1**
 ```
