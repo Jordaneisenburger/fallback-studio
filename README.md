@@ -8,7 +8,8 @@
 
 # Fallback Studio
 
-Fallback Studio creates a wrapper around [PWA Studio](https://github.com/magento-research/pwa-studio) and provides a
+
+Fallback Studio (<small>the name was too funny not to use</small>) creates a wrapper around [PWA Studio](https://github.com/magento-research/pwa-studio) and provides a
 basic fallback structure so you can create storefronts that depend on the venia-concept storefront. 
 
 ### Motivation
