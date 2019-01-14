@@ -56,31 +56,108 @@ Right now you should see something like this in your terminal:
 
 ## How the fallback structure works
 
+So to give you a feeling on how it all works we first need to take a look at a crucial file in the fallback structure.
+If you open the following file `src/example-company/example-shop/webpack.config.js` you see it looks a lot like the default `webpack.config.json` from
+`venia-concept`. The big difference is that everywhere there is a path to a certain file or folder we removed the contents from our storefront and added a fallback path.
 
+**For example:**<br />
+in our storefront we don't want to create a custom `babel.config.js` because the default from `venia-concept` fits our needs so we've deleted it from the `example-shop` storefront.
+
+Now to fallback to `venia-concept` we've changed **this:**
+```
+const configureBabel = require('./babel.config.js');
+```
+**to this:**
+```
+//decalred at the top of webpack.config.js
+const parentTheme = path.resolve(process.cwd() + '/../../pwa-studio/packages/venia-concept');
+
+const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
+```
+As you can tell this is pretty basic and straightforward. 
+<br/><br/>
+
+####So how about React components?
+
+To do this we again need to take a look at our `webpack.config.js` file but this time we need to scroll down a bit till we get to the `resolve` part that looks like:
 
 ```
+resolve: {
+    modules: [__dirname, 'node_modules', parentTheme],
+    mainFiles: ['index'],
+    extensions: ['.mjs', '.js', '.json', '.graphql'],
+    alias: {
+        parentSrc: path.resolve(parentTheme, 'src'),
+        parentComponents: path.resolve(parentTheme, 'src/components'),
+        parentQueries: path.resolve(parentTheme, 'src/queries')
+    }
 
+}
 ```
+As you can see we once again included the `const parentTheme` in the modules array. But the real 'magic' happens in the `alias` part.
+3 aliases are added for different folders inside the `venia-concept` folder. 
 
+**For example:**<br />
+`parentComponents` will resolve to `pwa-studio/packages/venia-concept/src/components`
+
+I've created a really basic example on how to fallback on `venia-concept` components. But first i'd like you to navigate to `src/example-company/example-shop/src/components` as you can tell we are missing quite a few components.<br />
+
+ Now pleas run the follow command from the root directory `npm run watch:example-shop` as you can tell it's pretty much the same as `venia-concept` but we've added a custom `TopBar` component
+ and overwritten the `Footer` component and added and extra block of content.
+ 
+ **Lets take a look ath the code:**<br />
+ Look at the following folder `src/example-company/example-shop/src/components/Footer` as you can tell we've only copied `index.js` and `footer.js` but we are missing `footer.css` but the styling still works.
+ That's because inside `footer.js` we made a little change:
+ 
+ **from this:**
+ ```
+ import defaultClasses from './footer.css';
+ ```
+ 
+ **to this:** (remember our alias inside webpack.config.js?)
+ ```
+ import defaultClasses from 'parentComponents/Footer/footer.css';
+ ```
+ So we've changed this component with a custom piece of content 'Custom Example shop' but kept the default styling.
+ 
+ **Another example:**<br/>
+ I've created a custom component called `TopBar` this one is not overwritten from `venia-concept`. I want to include this on every page so i've copied the `Main` component from `venia-concept` to our `components` folder.
+ 
+ As you can tell i've added aliases for all components that we are not changing and included my own custom component:
+ ```
+ //Uncomment to use venia-concept footer again
+ //import Footer from 'parentComponents/Footer';
+ 
+ import Footer from 'src/components/Footer';
+ 
+ import Header from 'parentComponents/Header';
+ import TopBar from 'src/components/TopBar';
+ import defaultClasses from 'parentComponents/Main/main.css';
+ 
+ ...
+ 
+ <main className={classes.root}>
+     <TopBar />
+     <Header />
+     <article className={classes.page}>{children}</article>
+     <Footer />
+ </main>
+ ```
+  
 ## Creating a custom storefront
+The easiest way to add a custom storefront is to duplicate the `example-company` folder and rename it to your likings.
+Don't forget to change it inside the root package.json, lerna.json and the package.json from the storefront.
 
+**NOTE:**<br />
+For now you shouldn't change the names of the folder because there will be bugfixes etc. and if you've changed the folder names this will cause problems when you update this repo. I'm planning on adding a simple CLI like `create-react-app` to setup your own theme.
 
-
-```
-
-```
 
 ## Updating PWA Studio
-
-
-
-```
+To update to the latest `pwa-studio` version you want to run the following commands from the project root dir
 
 ```
-
-
-## License
-
+npm run upgrade:pwa-studio
+```
 
 
 ## Credits
