@@ -181,3 +181,6 @@ Always check the changes before you update because you might need to make change
 
 * Magento for creating [PWA Studio](https://github.com/magento-research/pwa-studio)
 
+## Definitely not needed but appreciated
+
+<a href="https://www.buymeacoffee.com/Fc5IDf687" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
