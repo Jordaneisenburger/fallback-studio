@@ -79,7 +79,7 @@ const configureBabel = require('./babel.config.js');
 ```
 **to this:**
 ```
-//decalred at the top of webpack.config.js
+//declared at the top of webpack.config.js
 const parentTheme = path.resolve(process.cwd() + '/../../pwa-studio/packages/venia-concept');
 
 const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
@@ -110,7 +110,7 @@ As you can see we once again included the `const parentTheme` in the modules arr
 **For example:**<br />
 `parentComponents` will resolve to `pwa-studio/packages/venia-concept/src/components`
 
-I've created a really basic example on how to fallback on `venia-concept` components. But first i'd like you to navigate to `src/example-company/example-shop/src/components` as you can tell we are missing quite a few components.<br />
+I've created a really basic example on how to fallback on `venia-concept` components. But first I'd like you to navigate to `src/example-company/example-shop/src/components` as you can tell we are missing quite a few components.<br />
 
  Now pleas run the follow command from the root directory `npm run watch:example-shop` as you can tell it's pretty much the same as `venia-concept` but we've added a custom `TopBar` component
  and overwritten the `Footer` component and added and extra block of content.
@@ -131,9 +131,9 @@ I've created a really basic example on how to fallback on `venia-concept` compon
  So we've changed this component with a custom piece of content 'Custom Example shop' but kept the default styling.
  
  **Another example:**<br/>
- I've created a custom component called `TopBar` this one is not overwritten from `venia-concept` storefront. I want to include this on every page so i've copied the `Main` component from `venia-concept` to our `components` folder.
+ I've created a custom component called `TopBar` this one is not overwritten from `venia-concept` storefront. I want to include this on every page so I've copied the `Main` component from `venia-concept` to our `components` folder.
  
- As you can tell i've added aliases for all components that we are not changing and included my own custom component:
+ As you can tell I've added aliases for all components that we are not changing and included my own custom component:
  ```
  //Uncomment to use venia-concept footer again
  //import Footer from 'parentComponents/Footer';
