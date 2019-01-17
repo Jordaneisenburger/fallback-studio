@@ -4,9 +4,13 @@
     "description": "Fallback wrapper for Magento PWA Studio",
     "author": "Jordan Eisenburger",
     "homepage": "https://github.com/Jordaneisenburger/fallback-studio",
+    "storefront": {
+        "company": "example-company",
+        "project": "example-shop"
+    },
     "scripts": {
         "clean:pwa-studio": "cd src/pwa-studio && npm run clean:all",
-        "clean:example-company": "cd src/example-company/example-shop && npm run clean:all",
+        "clean:example-company": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && npm run clean:all",
         "clean:all": "npm run clean:pwa-studio && npm run clean:example-company",
         "clone:pwa-studio": "cd src && git clone https://github.com/magento-research/pwa-studio.git",
         "upgrade:pwa-studio": "rimraf src/pwa-studio && npm run clone:pwa-studio && npm run prepare:pwa-studio && npm run clean:pwa-studio && npm install && npm run build",
@@ -14,7 +18,7 @@
         "build": "npx lerna bootstrap --hoist && npx lerna run --stream build -- -s",
         "setup": "npm install && npm run prepare:pwa-studio && npm run build",
         "watch:venia-concept": "cd src/pwa-studio && npm run watch:venia",
-        "watch:example-shop": "cd src/example-company/example-shop && npm run -s watch; cd - >/dev/null"
+        "watch:example-shop": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && npm run -s watch; cd - >/dev/null"
     },
     "engines": {
         "node": ">=10.14.1"
