@@ -1,25 +1,28 @@
 import React, { Component, Fragment, Suspense } from 'react';
 import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { bool, object, shape, string } from 'prop-types';
+import { connect } from 'src/drivers';
+import { bool, func, object, shape, string } from 'prop-types';
 
 import { Price } from '@magento/peregrine';
 import classify from 'src/classify';
 import { getCartDetails, removeItemFromCart } from 'src/actions/cart';
+import { cancelCheckout } from 'src/actions/checkout';
 import Icon from 'src/components/Icon';
 import CloseIcon from 'react-feather/dist/icons/x';
 import Button from 'src/components/Button';
 import CheckoutButton from 'src/components/Checkout/checkoutButton';
 import EmptyMiniCart from './emptyMiniCart';
+import Mask from './mask';
 import ProductList from './productList';
 import Trigger from './trigger';
 import defaultClasses from './miniCart.css';
-import { isEmptyCartVisible } from 'src/selectors/cart';
+import { isEmptyCartVisible, isMiniCartMaskOpen } from 'src/selectors/cart';
 
 const Checkout = React.lazy(() => import('src/components/Checkout'));
 
 class MiniCart extends Component {
     static propTypes = {
+        cancelCheckout: func.isRequired,
         cart: shape({
             details: object,
             guestCartId: string,
@@ -28,6 +31,7 @@ class MiniCart extends Component {
         classes: shape({
             body: string,
             footer: string,
+            footerMaskOpen: string,
             header: string,
             placeholderButton: string,
             root_open: string,
@@ -38,7 +42,8 @@ class MiniCart extends Component {
             title: string,
             totals: string
         }),
-        isCartEmpty: bool
+        isCartEmpty: bool,
+        isMiniCartMaskOpen: bool
     };
 
     constructor(...args) {
@@ -91,20 +96,23 @@ class MiniCart extends Component {
         const { cart, classes } = this.props;
         const { cartCurrencyCode, cartId } = this;
         const hasSubtotal = cartId && cart.totals && 'subtotal' in cart.totals;
+        const itemsQuantity = cart.details.items_qty;
+        const itemQuantityText = itemsQuantity === 1 ? 'item' : 'items';
+        const totalPrice = cart.totals.subtotal;
 
         return hasSubtotal ? (
             <dl className={classes.totals}>
                 <dt className={classes.subtotalLabel}>
                     <span>
-                        Subtotal
-                        {` (${cart.details.items_qty} Items)`}
+                        Cart Total :&nbsp;
+                        <Price
+                            currencyCode={cartCurrencyCode}
+                            value={totalPrice}
+                        />
                     </span>
                 </dt>
                 <dd className={classes.subtotalValue}>
-                    <Price
-                        currencyCode={cartCurrencyCode}
-                        value={cart.totals.subtotal}
-                    />
+                    ({itemsQuantity} {itemQuantityText})
                 </dd>
             </dl>
         ) : null;
@@ -160,7 +168,7 @@ class MiniCart extends Component {
         return (
             <div className={classes.save}>
                 <Button onClick={this.hideEditPanel}>Cancel</Button>
-                <Button>Update Cart</Button>
+                <Button priority="high">Update Cart</Button>
             </div>
         );
     }
@@ -187,7 +195,7 @@ class MiniCart extends Component {
             props,
             state
         } = this;
-        const { classes, isCartEmpty } = props;
+        const { classes, isCartEmpty, isMiniCartMaskOpen } = props;
 
         if (isCartEmpty) {
             return <EmptyMiniCart />;
@@ -196,11 +204,14 @@ class MiniCart extends Component {
         const { isEditPanelOpen } = state;
         const body = isEditPanelOpen ? productOptions : productList;
         const footer = isEditPanelOpen ? productConfirm : checkout;
+        const footerClassName = isMiniCartMaskOpen
+            ? classes.footerMaskOpen
+            : classes.footer;
 
         return (
             <Fragment>
                 <div className={classes.body}>{body}</div>
-                <div className={classes.footer}>{footer}</div>
+                <div className={footerClassName}>{footer}</div>
             </Fragment>
         );
     }
@@ -211,7 +222,7 @@ class MiniCart extends Component {
         }
 
         const { miniCartInner, props } = this;
-        const { classes, isOpen } = props;
+        const { classes, isOpen, isMiniCartMaskOpen, cancelCheckout } = props;
         const className = isOpen ? classes.root_open : classes.root;
         const title = this.state.isEditPanelOpen
             ? 'Edit Cart Item'
@@ -228,6 +239,7 @@ class MiniCart extends Component {
                     </Trigger>
                 </div>
                 {miniCartInner}
+                <Mask isActive={isMiniCartMaskOpen} dismiss={cancelCheckout} />
             </aside>
         );
     }
@@ -238,11 +250,16 @@ const mapStateToProps = state => {
 
     return {
         cart,
-        isCartEmpty: isEmptyCartVisible(state)
+        isCartEmpty: isEmptyCartVisible(state),
+        isMiniCartMaskOpen: isMiniCartMaskOpen(state)
     };
 };
 
-const mapDispatchToProps = { getCartDetails, removeItemFromCart };
+const mapDispatchToProps = {
+    getCartDetails,
+    removeItemFromCart,
+    cancelCheckout
+};
 
 export default compose(
     classify(defaultClasses),
