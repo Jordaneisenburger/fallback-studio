@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/Footer/index.js"],"names":["default"],"mappings":"AAAA,SAASA,OAAT","sourcesContent":["export { default } from './footer';\n"],"file":"index.js"}

@@ -11,9 +11,7 @@ const {
         PWADevServer
     }
 } = require('@magento/pwa-buildpack');
-const babelEnvDeps = require('webpack-babel-env-deps');
 const TerserPlugin = require('terser-webpack-plugin');
-const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
 
 const themePaths = {
     images: path.resolve(__dirname, 'images'),
@@ -29,22 +27,26 @@ const rootComponentsDirs = [
 
 const libs = [
     'apollo-boost',
+    'informed',
     'react',
+    'react-apollo',
     'react-dom',
+    'react-feather',
     'react-redux',
     'react-router-dom',
-    'redux'
+    'redux',
+    'redux-actions',
+    'redux-thunk'
 ];
 
 module.exports = async function(env) {
     const mode = (env && env.mode) || process.env.NODE_ENV || 'development';
 
-    const babelOptions = configureBabel(mode);
-
     const enableServiceWorkerDebugging =
         validEnv.ENABLE_SERVICE_WORKER_DEBUGGING;
 
     const serviceWorkerFileName = validEnv.SERVICE_WORKER_FILE_NAME;
+    const braintreeToken = validEnv.BRAINTREE_TOKEN;
 
     const config = {
         mode,
@@ -74,14 +76,17 @@ module.exports = async function(env) {
                     include: [
                         themePaths.src,
                         /peregrine\/src\//,
-                        babelEnvDeps.include(),
                         path.resolve(parentTheme, 'src')
                     ],
                     test: /\.(mjs|js)$/,
                     use: [
                         {
                             loader: 'babel-loader',
-                            options: { ...babelOptions, cacheDirectory: true }
+                            options: {
+                                cacheDirectory: true,
+                                envName: mode,
+                                rootMode: 'upward'
+                            }
                         }
                     ]
                 },
@@ -159,6 +164,7 @@ module.exports = async function(env) {
                 rootComponentsDirs,
                 context: __dirname
             }),
+            new webpack.EnvironmentPlugin(validEnv),
             new webpack.DefinePlugin({
                 'process.env': {
                     NODE_ENV: JSON.stringify(mode),
@@ -170,7 +176,8 @@ module.exports = async function(env) {
                         mode === 'production' || enableServiceWorkerDebugging
                             ? serviceWorkerFileName
                             : false
-                    )
+                    ),
+                    BRAINTREE_TOKEN: JSON.stringify(braintreeToken)
                 }
             }),
             new ServiceWorkerPlugin({
@@ -205,6 +212,7 @@ module.exports = async function(env) {
         config.devtool = 'eval-source-map';
 
         const devServerConfig = {
+            env: validEnv,
             publicPath: config.output.publicPath,
             graphqlPlayground: {
                 queryDirs: [

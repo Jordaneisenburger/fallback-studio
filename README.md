@@ -32,7 +32,7 @@ Make sure you have the following:
 
 - NodeJS >=10.14.1 LTS
 
-- Node Package Manager
+- Yarn >=1.13.0
 
 - unix based OS for example MacOS or Linux
 
@@ -52,12 +52,12 @@ cd fallback-studio
 
 **step: 2** (this runs all necessary package.json commands back to back)
 ```
-npm run setup
+yarn run setup
 ```
 
 **step: 3**
 ```
-npm run watch:example-shop
+yarn run watch:example-shop
 ```
 
 Right now you should see something like this in your terminal:
@@ -112,7 +112,7 @@ As you can see we once again included the `const parentTheme` in the modules arr
 
 I've created a really basic example on how to fallback on `venia-concept` components. But first I'd like you to navigate to `src/example-company/example-shop/src/components` as you can tell we are missing quite a few components.<br />
 
- Now pleas run the follow command from the root directory `npm run watch:example-shop` as you can tell it's pretty much the same as `venia-concept` but we've added a custom `TopBar` component
+ Now pleas run the follow command from the root directory `yarn run watch:example-shop` as you can tell it's pretty much the same as `venia-concept` but we've added a custom `TopBar` component
  and overwritten the `Footer` component and added and extra block of content.
  
  **Lets take a look at the code:**<br />
@@ -166,7 +166,7 @@ For now you shouldn't change the names of the folder because there will be bugfi
 To update to the latest `pwa-studio` version you want to run the following commands from the project root dir
 
 ```
-npm run upgrade:pwa-studio
+yarn run upgrade:pwa-studio
 ```
 
 **NOTE:**<br/>

@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "packages": [
         "src/pwa-studio/packages/peregrine",
         "src/pwa-studio/packages/pwa-buildpack",
@@ -9,5 +9,6 @@
         "src/example-company/example-shop"
 
     ],
-    "npmClient": "npm"
+    "npmClient": "yarn",
+    "useWorkspaces": true
 }
