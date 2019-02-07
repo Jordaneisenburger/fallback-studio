@@ -13,4 +13,4 @@ lerna-debug.log
 .env
 yarn-error.log
 # Packages that build partially transpiled ES modules put them here
-src/*/*/*/esm/*
+src/*/*/esm/*
