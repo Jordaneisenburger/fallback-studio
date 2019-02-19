@@ -12,6 +12,7 @@ const {
     }
 } = require('@magento/pwa-buildpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 const themePaths = {
     images: path.resolve(__dirname, 'images'),
@@ -191,6 +192,28 @@ module.exports = async function(env) {
                     swSrc: path.resolve(parentTheme, 'src/sw.js'),
                     swDest: 'sw.js'
                 }
+            }),
+            new WebpackAssetsManifest({
+                output: 'asset-manifest.json',
+                entrypoints: true,
+                // Add explicit properties to the asset manifest for
+                // venia-upward.yml to use when evaluating app shell templates.
+                transform(assets) {
+                    // All RootComponents go to prefetch, and all client scripts
+                    // go to load.
+                    assets.bundles = {
+                        load: assets.entrypoints.client.js,
+                        prefetch: []
+                    };
+                    Object.entries(assets).forEach(([name, value]) => {
+                        if (name.startsWith('RootCmp')) {
+                            const filenames = Array.isArray(value)
+                                ? value
+                                : [value];
+                            assets.bundles.prefetch.push(...filenames);
+                        }
+                    });
+                }
             })
         ],
         optimization: {
@@ -226,7 +249,7 @@ module.exports = async function(env) {
             devServerConfig.provideSecureHost = {
                 subdomain: validEnv.MAGENTO_BUILDPACK_SECURE_HOST_SUBDOMAIN,
                 exactDomain:
-                    validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
+                validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
                 addUniqueHash: !!validEnv.MAGENTO_BUILDPACK_SECURE_HOST_ADD_UNIQUE_HASH
             };
         }

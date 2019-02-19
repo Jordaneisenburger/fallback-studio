@@ -1,6 +1,6 @@
 {
     "name": "fallback-studio",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Fallback wrapper for Magento PWA Studio",
     "author": "Jordan Eisenburger",
     "homepage": "https://github.com/Jordaneisenburger/fallback-studio",
@@ -19,12 +19,13 @@
     },
     "scripts": {
         "clean:pwa-studio": "cd src/pwa-studio && yarn run clean:all",
-        "clean:example-company": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && yarn run clean",
-        "clean:all": "yarn run clean:pwa-studio && yarn run clean:example-company",
+        "clean:example-company": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && yarn run clean && rimraf ./node_modules",
+        "clean:all": "yarn run clean:pwa-studio && yarn run clean:example-company && rimraf ./node_modules",
         "clone:pwa-studio": "cd src && git clone https://github.com/magento-research/pwa-studio.git",
         "upgrade:pwa-studio": "rimraf src/pwa-studio && yarn run clone:pwa-studio && yarn run prepare:pwa-studio && yarn run clean:pwa-studio && yarn install && yarn run build",
         "prepare:pwa-studio": "cd src/pwa-studio && cp packages/venia-concept/.env.dist packages/venia-concept/.env && rimraf ./.git",
         "build": "yarn workspaces run build",
+        "build:dev": "yarn workspaces run build:dev",
         "setup": "yarn install && yarn run prepare:pwa-studio && yarn run build",
         "watch:venia-concept": "cd src/pwa-studio && yarn run watch:venia",
         "watch:example-shop": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && yarn run -s watch; cd - >/dev/null"
@@ -36,10 +37,10 @@
     "devDependencies": {
         "@magento/eslint-config": "~1.3.0",
         "babel-eslint": "~10.0.1",
-        "babel-plugin-module-resolver": "~3.1.3",
-        "bundlesize": "~0.17.1",
+        "babel-plugin-module-resolver": "~3.2.0",
         "chalk": "~2.4.2",
         "chokidar": "~2.0.4",
+        "coveralls": "~3.0.2",
         "danger": "~7.0.2",
         "eslint": "~5.12.0",
         "eslint-plugin-babel": "~5.3.0",
@@ -67,5 +68,18 @@
         "sass-loader": "~7.1.0",
         "node-sass": "~4.10.0",
         "rimraf": "2.6.2"
-    }
+    },
+    "optionalDependencies": {
+        "bundlesize": "~0.17.1"
+    },
+    "bundlesize": [
+        {
+            "path": "./packages/venia-concept/dist/js/{client,vendor}.js",
+            "maxSize": "150 kB"
+        },
+        {
+            "path": "./packages/venia-concept/dist/js/[0-9]-*.js",
+            "maxSize": "21 kB"
+        }
+    ]
 }

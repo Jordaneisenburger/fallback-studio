@@ -55,8 +55,7 @@
         "react-router-dom": "~4.4.0-beta.6",
         "redux": "~4.0.1",
         "redux-actions": "~2.6.4",
-        "redux-thunk": "~2.3.0",
-        "sharp": "~0.21.2"
+        "redux-thunk": "~2.3.0"
     },
     "devDependencies": {
         "@babel/core": "~7.2.2",
@@ -69,7 +68,7 @@
         "@babel/preset-env": "~7.2.3",
         "@magento/pwa-buildpack": "^2.0.0-rc.19",
         "@magento/upward-js": "^2.0.0-rc.19",
-        "@storybook/react": "~4.1.6",
+        "@storybook/react": "~4.1.11",
         "babel-core": "~7.0.0-bridge.0",
         "babel-jest": "~23.6.0",
         "babel-loader": "~8.0.5",
@@ -86,9 +85,13 @@
         "rimraf": "~2.6.3",
         "terser-webpack-plugin": "~1.2.1",
         "webpack": "~4.28.4",
+        "webpack-assets-manifest": "~3.1.1",
         "webpack-bundle-analyzer": "~3.0.3",
         "webpack-cli": "~3.2.1",
         "webpack-dev-server": "~3.1.14"
+    },
+    "optionalDependencies": {
+        "sharp": "~0.21.2"
     },
     "engines": {
         "node": ">=10.7.0",
