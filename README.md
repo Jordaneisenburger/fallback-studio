@@ -30,9 +30,9 @@ Based on the amount questions i've been asked and seen in the community around t
 ## Prerequisites
 Make sure you have the following:
 
-- NodeJS >=10.14.1 LTS
+- NodeJS >= 10.14.1 LTS (NodeJS 11+ can cause problems)
 
-- Yarn >=1.13.0
+- Yarn >= 1.13.0
 
 - unix based OS for example MacOS or Linux
 
