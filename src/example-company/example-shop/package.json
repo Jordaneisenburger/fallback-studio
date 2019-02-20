@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "2.0.0-rc.19",
+    "version": "2.0.0-rc.20",
     "description": "Exampel shop",
     "author": "Jordan Eisenburger",
     "main": "src/index.js",
@@ -66,8 +66,8 @@
         "@babel/plugin-transform-react-jsx": "~7.2.0",
         "@babel/plugin-transform-runtime": "~7.2.0",
         "@babel/preset-env": "~7.2.3",
-        "@magento/pwa-buildpack": "^2.0.0-rc.19",
-        "@magento/upward-js": "^2.0.0-rc.19",
+        "@magento/pwa-buildpack": "^2.0.0-rc.20",
+        "@magento/upward-js": "^2.0.0-rc.20",
         "@storybook/react": "~4.1.11",
         "babel-core": "~7.0.0-bridge.0",
         "babel-jest": "~23.6.0",
