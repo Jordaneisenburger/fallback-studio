@@ -34,6 +34,8 @@ Make sure you have the following:
 
 - Yarn >= 1.13.0
 
+- Python 2.7 and build tools, [see the Installation instructions on node-gyp](https://github.com/nodejs/node-gyp#installation) for your platform.
+
 - unix based OS for example MacOS or Linux
 
 ## Quick setup
@@ -71,18 +73,18 @@ If you open the following file `src/example-company/example-shop/webpack.config.
 `venia-concept`. The big difference is that everywhere there is a path to a certain file or folder we removed the contents from our storefront and added a fallback path.
 
 **For example:**<br />
-in our storefront we don't want to create a custom `babel.config.js` because the default from `venia-concept` fits our needs so we've deleted it from the `example-shop` storefront.
+in our storefront we don't want to create a custom `validate-environment.js` because the default from `venia-concept` fits our needs so we've deleted it from the `example-shop` storefront.
 
 Now to fallback to `venia-concept` we've changed **this:**
 ```
-const configureBabel = require('./babel.config.js');
+const validEnv = require('./validate-environment')(process.env);
 ```
 **to this:**
 ```
-//declared at the top of webpack.config.js
+//declared at the top of our webpack.config.js
 const parentTheme = path.resolve(process.cwd() + '/../../pwa-studio/packages/venia-concept');
 
-const configureBabel = require(path.resolve(parentTheme, 'babel.config.js'));
+const validEnv = require(`${parentTheme}/validate-environment`)(process.env);
 ```
 As you can tell this is pretty basic and straightforward. 
 <br/><br/>
