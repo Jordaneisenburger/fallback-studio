@@ -9,9 +9,9 @@
         "src/pwa-studio/packages/graphql-cli-validate-magento-pwa-queries",
         "src/pwa-studio/packages/peregrine",
         "src/pwa-studio/packages/pwa-buildpack",
-        "src/pwa-studio/packages/venia-concept",
         "src/pwa-studio/packages/upward-js",
         "src/pwa-studio/packages/upward-spec",
+        "src/pwa-studio/packages/venia-concept",
         "src/example-company/example-shop"
     ],
     "storefront": {
@@ -68,6 +68,9 @@
         "sass-loader": "~7.1.0",
         "node-sass": "~4.10.0",
         "rimraf": "2.6.2"
+    },
+    "resolutions": {
+        "graphql": "14.1.1"
     },
     "optionalDependencies": {
         "bundlesize": "~0.17.1"
