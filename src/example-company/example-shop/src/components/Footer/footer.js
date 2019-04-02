@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import defaultClasses from 'parentComponent/Footer/footer.css';
+import defaultClasses from 'parentComponents/Footer/footer.css';
 import storeConfigDataQuery from '../../queries/getStoreConfigData.graphql';
 import { Query } from 'src/drivers';
 
