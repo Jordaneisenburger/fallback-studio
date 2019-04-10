@@ -1,4 +1,6 @@
 jest.mock('devcert');
+jest.mock('execa');
+jest.mock('is-elevated', () => jest.fn(async () => true));
 
 const FAKE_CWD = '/path/to/fake/cwd';
 
@@ -7,6 +9,7 @@ const pkg = jest.fn();
 jest.doMock(pkgLocTest, pkg, { virtual: true });
 const devcert = require('devcert');
 const { configureHost } = require('../');
+const isElevated = require('is-elevated');
 const execa = require('execa');
 
 const fakeCertPair = {
@@ -60,6 +63,10 @@ const simulate = {
         jest.resetModules();
         pkg.mockImplementationOnce(() => ({ name }));
         return simulate;
+    },
+    passwordRequired() {
+        execa.shell.mockRejectedValueOnce(new Error('whatever'));
+        isElevated.mockReturnValueOnce(false);
     }
 };
 
@@ -68,13 +75,11 @@ beforeEach(() => {
     jest.spyOn(process, 'cwd');
     process.cwd.mockReturnValue(FAKE_CWD);
     jest.spyOn(console, 'warn').mockImplementation();
-    jest.spyOn(execa, 'shell').mockImplementation(() => Promise.resolve());
 });
 
 afterEach(() => {
     process.cwd.mockRestore();
     console.warn.mockRestore();
-    execa.shell.mockRestore();
 });
 
 const hostRegex = (
@@ -170,7 +175,7 @@ test('warns about sudo prompt if cert needs to be created', async () => {
     await configureHost({ subdomain: 'best-boss-i-ever-had' });
     expect(console.warn).not.toHaveBeenCalled();
     simulate.certCreated();
-    execa.shell.mockRejectedValueOnce(new Error('wat'));
+    simulate.passwordRequired();
     await configureHost({ subdomain: 'bar-none' });
     process.stdin.isTTY = oldIsTTY;
     expect(console.warn).toHaveBeenCalledWith(
@@ -193,10 +198,16 @@ test('fails informatively if devcert fails', async () => {
     await expect(configureHost({ subdomain: 'uss.hood' })).rejects.toThrowError(
         'Could not setup development domain'
     );
+    simulate.certFailed();
+    simulate.passwordRequired();
+    await expect(configureHost({ subdomain: 'uss.hood' })).rejects.toThrowError(
+        'Could not authenticate'
+    );
 });
 
 test('fails if process is not connected to tty', async () => {
     simulate.certCreated();
+    simulate.passwordRequired();
     const oldIsTTY = process.stdin.isTTY;
     process.stdin.isTTY = false;
     await expect(configureHost({ subdomain: 'uss.hood' })).rejects.toThrowError(

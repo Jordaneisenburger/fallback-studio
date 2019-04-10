@@ -29,7 +29,7 @@
         "build:dev": "yarn workspaces run build:dev",
         "setup": "yarn install && yarn run prepare:pwa-studio && yarn run build",
         "watch:venia-concept": "cd src/pwa-studio && yarn run watch:venia",
-        "watch:example-shop": "cd src/$npm_package_storefront_company/$npm_package_storefront_project && yarn run -s watch; cd - >/dev/null"
+        "watch:example-shop": "yarn workspace @fallback-studio/example-shop run watch"
     },
     "engines": {
         "node": ">=10.14.1",

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import defaultClasses from './footer.css';
-import storeConfigDataQuery from '../../queries/getStoreConfigData.graphql';
-import { Query } from 'src/drivers';
 
 class Footer extends Component {
     static propTypes = {
@@ -63,27 +61,7 @@ class Footer extends Component {
                     </p>
                 </div>
                 <small className={classes.copyright}>
-                    <Query query={storeConfigDataQuery}>
-                        {({ loading, error, data }) => {
-                            if (error) {
-                                return (
-                                    <span className={classes.fetchError}>
-                                        Data Fetch Error:{' '}
-                                        <pre>{error.message}</pre>
-                                    </span>
-                                );
-                            }
-                            if (loading) {
-                                return (
-                                    <span className={classes.fetchingData}>
-                                        Fetching Data
-                                    </span>
-                                );
-                            }
-
-                            return <span>{data.storeConfig.copyright}</span>;
-                        }}
-                    </Query>
+                    © Magento 2018. All rights reserved.
                 </small>
             </footer>
         );
