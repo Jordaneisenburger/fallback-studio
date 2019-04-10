@@ -1,7 +1,7 @@
 ---
-name: Bug Report
-about: Report a bug you've found in our code!
-title: "[bug]: A short, simple sentence describing the bug"
+name: Bug report
+about: Create a report to help us improve
+title: ""
 labels: bug
 assignees: ''
 ---
@@ -34,23 +34,15 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Additional context**
-Add any other context about the problem here.
-
-**Possible solutions**
-Add any ideas about possible solutions to the problem here.
-
 **Please complete the following device information:**
- - Device [e.g. iPhone6, PC, Mac, Pixel3]:
- - OS [e.g. iOS8.1, Windows 10]:
- - Browser [e.g. Chrome, Safari]:
- - Browser Version [e.g. 22]:
- - Magento Version:
- - PWA Studio Version:
- - NPM version `npm -v`:
- - Node Version `node -v`:
+ - Device: [e.g. iPhone6, PC]
+ - OS: [e.g. iOS8.1, Windows 10]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
+ - Magento Version
+ - NPM version `npm -v`
+ - Node Version `node -v`
 
-<!-- Complete the following sections to help us apply appropriate labels! -->
 **Please let us know what packages this bug is in regards to:**
 - [ ] `venia-concept`
 - [ ] `pwa-buildpack`
@@ -58,3 +50,9 @@ Add any ideas about possible solutions to the problem here.
 - [ ] `pwa-devdocs`
 - [ ] `upward-js`
 - [ ] `upward-spec`
+
+**Additional context**
+Add any other context about the problem here.
+
+**Possible solutions**
+Add any ideas about possible solutions to the problem here.

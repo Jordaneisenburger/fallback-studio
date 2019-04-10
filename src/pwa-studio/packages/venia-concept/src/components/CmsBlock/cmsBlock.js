@@ -29,7 +29,7 @@ class CmsBlockGroup extends Component {
             return <div>Fetching Data</div>;
         }
 
-        const { items } = data.cmsBlocks;
+        const { items } = data.blocks;
 
         if (!Array.isArray(items) || !items.length) {
             return <div>There are no blocks to display</div>;

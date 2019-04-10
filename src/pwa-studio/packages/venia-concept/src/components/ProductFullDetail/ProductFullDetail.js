@@ -2,10 +2,8 @@ import React, { Component, Suspense } from 'react';
 import { arrayOf, bool, func, number, shape, string } from 'prop-types';
 import { Form } from 'informed';
 import { Price } from '@magento/peregrine';
-import { compose } from 'redux';
 
 import classify from 'src/classify';
-import { connect } from 'src/drivers';
 import Button from 'src/components/Button';
 import { loadingIndicator } from 'src/components/LoadingIndicator';
 import Carousel from 'src/components/ProductImageCarousel';
@@ -171,8 +169,8 @@ class ProductFullDetail extends Component {
     }
 
     render() {
-        const { addToCart, productOptions, props, mediaGalleryEntries } = this;
-        const { classes, isAddingItem, product } = props;
+        const { productOptions, props, mediaGalleryEntries } = this;
+        const { classes, product } = props;
         const { regularPrice } = product.price;
 
         // We want this key to change whenever mediaGalleryEntries changes.
@@ -209,11 +207,7 @@ class ProductFullDetail extends Component {
                     />
                 </section>
                 <section className={classes.cartActions}>
-                    <Button
-                        priority="high"
-                        onClick={addToCart}
-                        disabled={isAddingItem}
-                    >
+                    <Button priority="high" onClick={this.addToCart}>
                         <span>Add to Cart</span>
                     </Button>
                 </section>
@@ -234,13 +228,4 @@ class ProductFullDetail extends Component {
     }
 }
 
-const mapStateToProps = ({ cart }) => {
-    return {
-        isAddingItem: cart.isAddingItem
-    };
-};
-
-export default compose(
-    classify(defaultClasses),
-    connect(mapStateToProps)
-)(ProductFullDetail);
+export default classify(defaultClasses)(ProductFullDetail);
