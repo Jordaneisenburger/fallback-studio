@@ -37,6 +37,7 @@
         "babel-plugin-module-resolver": "~3.2.0",
         "chalk": "~2.4.2",
         "chokidar": "~2.1.2",
+        "concurrently": "^4.1.0",
         "coveralls": "~3.0.3",
         "danger": "~7.0.17",
         "eslint": "~5.14.1",
@@ -57,7 +58,7 @@
         "lerna": "~3.13.0",
         "lodash.debounce": "~4.0.8",
         "multispinner": "~0.2.1",
-        "prettier": "1.16.4",
+        "prettier": "~1.16.4",
         "prettier-check": "~2.0.0",
         "stream-snitch": "~0.0.3",
         "wait-for-expect": "~1.1.0",
@@ -69,10 +70,11 @@
         "graphql": "14.1.1"
     },
     "optionalDependencies": {
-        "bundlesize": "~0.17.1"
+        "bundlesize": "~0.17.1",
+        "sharp": "~0.22.1"
     },
     "engines": {
-        "node": ">=10.7.0",
+        "node": "8.10.0 || >=10.7.0",
         "yarn": ">=1.12.0"
     },
     "bundlesize": [
