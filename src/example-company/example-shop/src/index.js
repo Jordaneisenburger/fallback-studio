@@ -8,6 +8,7 @@ import store from 'parentSrc/store';
 import app from 'parentSrc/actions/app';
 import App from 'parentComponents/App';
 import 'parentSrc/index.css';
+import { ToastContextProvider } from '@magento/peregrine';
 
 // we create this file here instead of scss because of loading order
 import './general.css';
@@ -41,7 +42,9 @@ ReactDOM.render(
         store={store}
     >
         <WindowSizeContextProvider>
-            <App />
+            <ToastContextProvider>
+                <App />
+            </ToastContextProvider>
         </WindowSizeContextProvider>
     </Adapter>,
     document.getElementById('root')

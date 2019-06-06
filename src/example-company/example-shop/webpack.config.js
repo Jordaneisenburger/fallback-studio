@@ -202,6 +202,7 @@ module.exports = async function(env) {
             new WebpackAssetsManifest({
                 output: 'asset-manifest.json',
                 entrypoints: true,
+                publicPath: '/',
                 // Add explicit properties to the asset manifest for
                 // venia-upward.yml to use when evaluating app shell templates.
                 transform(assets) {
@@ -237,23 +238,17 @@ module.exports = async function(env) {
     };
     if (mode === 'development') {
         config.devtool = 'eval-source-map';
-
         const devServerConfig = {
             env: validEnv,
             publicPath: config.output.publicPath,
-            graphqlPlayground: {
-                queryDirs: [
-                    path.resolve(themePaths.src, 'queries'),
-                    path.resolve(parentTheme, 'src/queries')
-                ]
-            }
+            graphqlPlayground: true
         };
         const provideHost = !!validEnv.MAGENTO_BUILDPACK_PROVIDE_SECURE_HOST;
         if (provideHost) {
             devServerConfig.provideSecureHost = {
                 subdomain: validEnv.MAGENTO_BUILDPACK_SECURE_HOST_SUBDOMAIN,
                 exactDomain:
-                    validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
+                validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
                 addUniqueHash: !!validEnv.MAGENTO_BUILDPACK_SECURE_HOST_ADD_UNIQUE_HASH
             };
         }

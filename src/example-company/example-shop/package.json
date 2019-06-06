@@ -11,9 +11,6 @@
         "@magento/venia-drivers": "../../pwa-studio/packages/venia-concept/src/drivers"
     },
     "repository": "github:jordaneisenburger/fallback-studio",
-    "bin": {
-        "venia": "../../pwa-studio/packages/venia-concept/bin/venia.js"
-    },
     "bugs": {
         "url": "https://github.com/jordaneisenburger/fallback-studio/issues"
     },
