@@ -85,10 +85,10 @@ const jestConfig = {
                 // so e.g. `classes.root` is always `"root"`.
                 '\\.css$': 'identity-obj-proxy',
                 '\\.svg$': 'identity-obj-proxy',
-                "^parentSrc(.*)$": `${parentRootDir}/packages/venia-concept/src$1`,
-                "^parentComponents(.*)$": `${parentRootDir}/packages/venia-concept/src/components$1`,
-                "^parentQueries(.*)$": `${parentRootDir}/packages/venia-concept/src/queries$1`,
-                "^src(.*)$": `${parentRootDir}/packages/venia-concept/src$1`,
+                '^parentSrc(.*)$': `${parentRootDir}/packages/venia-concept/src$1`,
+                '^parentComponents(.*)$': `${parentRootDir}/packages/venia-concept/src/components$1`,
+                '^parentQueries(.*)$': `${parentRootDir}/packages/venia-concept/src/queries$1`,
+                '^src(.*)$': `${parentRootDir}/packages/venia-concept/src$1`
             },
             // Reproduce the Webpack resolution config that lets Venia import
             // from `src` instead of with relative paths:
