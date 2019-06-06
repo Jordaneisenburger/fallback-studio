@@ -122,7 +122,7 @@ const jestConfig = {
     collectCoverage: true,
     collectCoverageFrom: [
         // Code directories
-        `<rootDir>/${companyName}/${projectName}/*/{src,lib}/**/*.js/`,
+        `${projectName}/*/{src,lib}/**/*.js/`,
         // Not node_modules
         '!**/node_modules/**',
         // Not __tests__, __helpers__, or __any_double_underscore_folders__
