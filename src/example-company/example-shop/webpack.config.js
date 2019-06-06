@@ -8,7 +8,6 @@ const {
     WebpackTools: {
         makeMagentoRootComponentsPlugin,
         ServiceWorkerPlugin,
-        MagentoResolver,
         UpwardPlugin,
         PWADevServer
     }
