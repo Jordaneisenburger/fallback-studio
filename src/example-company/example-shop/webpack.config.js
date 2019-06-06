@@ -248,7 +248,7 @@ module.exports = async function(env) {
             devServerConfig.provideSecureHost = {
                 subdomain: validEnv.MAGENTO_BUILDPACK_SECURE_HOST_SUBDOMAIN,
                 exactDomain:
-                validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
+                    validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
                 addUniqueHash: !!validEnv.MAGENTO_BUILDPACK_SECURE_HOST_ADD_UNIQUE_HASH
             };
         }
