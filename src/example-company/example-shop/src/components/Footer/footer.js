@@ -28,7 +28,10 @@ class Footer extends Component {
                     </h2>
                     <p className={classes.tileBody}>
                         <span>
-                            this component is overwritten inside "example-shop" but the styling is still resolved from "venia-concept" because we don't need to change styling
+                            this component is overwritten inside "example-shop"
+                            but the styling is still resolved from
+                            "venia-concept" because we don't need to change
+                            styling
                         </span>
                     </p>
                 </div>

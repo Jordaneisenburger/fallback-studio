@@ -1,5 +1,7 @@
 const path = require('path');
-const parentTheme = path.resolve(process.cwd() + '/../../pwa-studio/packages/venia-concept');
+const parentTheme = path.resolve(
+    process.cwd() + '/../../pwa-studio/packages/venia-concept'
+);
 const validEnv = require(`${parentTheme}/validate-environment`)(process.env);
 const webpack = require('webpack');
 const {
@@ -130,7 +132,7 @@ module.exports = async function(env) {
                                 importLoaders: 2,
                                 localIdentName:
                                     '[name]-[local]-[hash:base64:3]',
-                                modules: true,
+                                modules: true
                             }
                         },
                         //reason we don't watch scss and css at the same time sass-loader see https://github.com/sass/node-sass/issues/2251
@@ -138,10 +140,10 @@ module.exports = async function(env) {
                         {
                             loader: 'sass-loader',
                             options: {
-                                data: '@import "./src/styles/core";',
+                                data: '@import "./src/styles/core";'
                             }
                         }
-                    ],
+                    ]
                 },
                 {
                     test: /\.(jpg|svg)$/,
@@ -163,7 +165,6 @@ module.exports = async function(env) {
                 parentComponents: path.resolve(parentTheme, 'src/components'),
                 parentQueries: path.resolve(parentTheme, 'src/queries')
             }
-
         },
         plugins: [
             await makeMagentoRootComponentsPlugin({
@@ -252,7 +253,7 @@ module.exports = async function(env) {
             devServerConfig.provideSecureHost = {
                 subdomain: validEnv.MAGENTO_BUILDPACK_SECURE_HOST_SUBDOMAIN,
                 exactDomain:
-                validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
+                    validEnv.MAGENTO_BUILDPACK_SECURE_HOST_EXACT_DOMAIN,
                 addUniqueHash: !!validEnv.MAGENTO_BUILDPACK_SECURE_HOST_ADD_UNIQUE_HASH
             };
         }

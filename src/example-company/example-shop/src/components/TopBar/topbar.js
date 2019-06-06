@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import classify from 'parentSrc/classify';
 import defaultClasses from './topbar.scss';
-import {shape, string} from "prop-types";
+import { shape, string } from 'prop-types';
 
 class TopBar extends Component {
     static propTypes = {
@@ -12,7 +12,6 @@ class TopBar extends Component {
     };
 
     render() {
-
         const { classes } = this.props;
 
         return (
