@@ -33,7 +33,13 @@
         "lint": "eslint 'src/example-company/**/{*.js,package.json}' --ignore-pattern node_modules --ignore-pattern storybook-dist --ignore-pattern dist",
         "prettier": "prettier --write 'src/example-company/**/*.@(js|scss)' '*.js'",
         "prettier:validate": "prettier-check 'src/example-company/**/*.@(js|scss)' '*.js'",
-        "prettier:check": "prettier --list-different 'src/example-company/**/*.@(js|scss)' '*.js'"
+        "prettier:check": "prettier --list-different 'src/example-company/**/*.@(js|scss)' '*.js'",
+        "test": "jest",
+        "test:ci": "jest --no-cache -i --json --outputFile=test-results.json",
+        "test:dev": "jest --watch",
+        "test:example-shop": "jest --config=example-shop.jest.config.js --no-cache",
+        "test:ci:example-shop": "jest --config=example-shop.jest.config.js --no-cache -i --json --outputFile=test-results.json",
+        "test:dev:example-shop": "jest --config=example-shop.jest.config.js --watch"
     },
     "devDependencies": {
         "@magento/eslint-config": "~1.4.0",
