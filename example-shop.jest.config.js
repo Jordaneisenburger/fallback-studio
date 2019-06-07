@@ -84,6 +84,7 @@ const jestConfig = {
                 // This mapping forces CSS Modules to return literal identies,
                 // so e.g. `classes.root` is always `"root"`.
                 '\\.css$': 'identity-obj-proxy',
+                '\\.scss$': 'identity-obj-proxy',
                 '\\.svg$': 'identity-obj-proxy',
                 '^parentSrc(.*)$': `${parentRootDir}/packages/venia-concept/src$1`,
                 '^parentComponents(.*)$': `${parentRootDir}/packages/venia-concept/src/components$1`,
