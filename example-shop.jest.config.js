@@ -88,14 +88,13 @@ const jestConfig = {
                 '^parentSrc(.*)$': `${parentRootDir}/packages/venia-concept/src$1`,
                 '^parentComponents(.*)$': `${parentRootDir}/packages/venia-concept/src/components$1`,
                 '^parentQueries(.*)$': `${parentRootDir}/packages/venia-concept/src/queries$1`,
-                '^src(.*)$': `${parentRootDir}/packages/venia-concept/src$1`
             },
             // Reproduce the Webpack resolution config that lets Venia import
             // from `src` instead of with relative paths:
             modulePaths: [
                 inPackage(),
                 inPackage('node_modules'),
-                '<rootDir>/node_modules'
+                `${__dirname}/src/pwa-studio/packages/venia-concept`,
             ],
             // Set up Enzyme React 16 adapter for testing React components
             setupFilesAfterEnv: [
