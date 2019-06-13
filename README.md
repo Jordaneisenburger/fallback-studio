@@ -66,6 +66,34 @@ Right now you should see something like this in your terminal:
 
 ![Alt text](docs/quick-setup.png?raw=true "Quick setup")
 
+## Production setup
+Note: only run commands from the root dir
+
+**step: 1**
+```
+git clone https://github.com/Jordaneisenburger/fallback-studio.git
+```
+
+**step: 2**
+```
+cd fallback-studio
+```
+
+**step: 3** (this runs all necessary package.json commands back to back)
+```
+yarn run setup
+```
+
+**step: 4**
+```
+NODE_ENV=production yarn run build
+```
+
+**step: 5**
+```
+NODE_ENV=production yarn run start
+```
+
 ## How the fallback structure works
 
 So to give you a feeling on how it all works we first need to take a look at a crucial file in the fallback structure.
