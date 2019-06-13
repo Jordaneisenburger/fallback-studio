@@ -52,12 +52,12 @@ git clone https://github.com/Jordaneisenburger/fallback-studio.git
 cd fallback-studio
 ```
 
-**step: 2** (this runs all necessary package.json commands back to back)
+**step: 3** (this runs all necessary package.json commands back to back)
 ```
 yarn run setup
 ```
 
-**step: 3**
+**step: 4**
 ```
 yarn run watch:example-shop
 ```
