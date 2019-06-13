@@ -91,7 +91,7 @@ NODE_ENV=production yarn run build
 
 **step: 5**
 ```
-NODE_ENV=production yarn run start
+NODE_ENV=production yarn run stage:example-shop
 ```
 
 ## How the fallback structure works

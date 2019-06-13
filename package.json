@@ -40,7 +40,7 @@
         "test:example-shop": "jest --config=example-shop.jest.config.js --no-cache",
         "test:ci:example-shop": "jest --config=example-shop.jest.config.js --no-cache -i --json --outputFile=test-results.json",
         "test:dev:example-shop": "jest --config=example-shop.jest.config.js --watch",
-        "start": "yarn workspace @fallback-studio/example-shop start"
+        "stage:example-shop": "yarn workspace @fallback-studio/example-shop start; cd - >/dev/null"
     },
     "devDependencies": {
         "@magento/eslint-config": "~1.4.0",
