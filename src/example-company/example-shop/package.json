@@ -18,7 +18,7 @@
         "clean": "rimraf dist",
         "download-schema": "graphql get-schema --project exampleshop --insecure",
         "load-env": "node ../../pwa-studio/packages/pwa-buildpack/bin/buildpack load-env --core-dev-mode .",
-        "start": "NODE_ENV=production node ../../pwa-studio/packages/venia-concept/server.js",
+        "start": "NODE_ENV=production node server.js",
         "start:debug": "node --inspect-brk ./node_modules/.bin/webpack-dev-server --progress --color --env.mode development",
         "stats": "webpack-bundle-analyzer dist/build-stats.json",
         "storybook": "start-storybook -p 9001 -c .storybook",
@@ -31,6 +31,7 @@
     "bugs": {
         "url": "https://github.com/jordaneisenburger/fallback-studio/issues"
     },
+    "license": "(OSL-3.0 OR AFL-3.0)",
     "dependencies": {},
     "devDependencies": {
         "@babel/core": "~7.3.4",

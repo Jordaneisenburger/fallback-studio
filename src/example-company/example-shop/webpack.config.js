@@ -5,7 +5,11 @@ const componentOverrideMapping = require('./componentOverrideMapping');
 const path = require('path');
 
 const parentTheme = path.resolve(
-    process.cwd() + '/../../pwa-studio/packages/venia-concept'
+    __dirname + '/../../pwa-studio/packages/venia-concept'
+);
+
+const parentThemeSrc = path.resolve(
+    __dirname + '/../../pwa-studio/packages/venia-concept/src'
 );
 
 module.exports = async env => {
@@ -32,20 +36,10 @@ module.exports = async env => {
             '@magento/peregrine': {
                 esModules: true
             },
-            '@fallback-studio/example-shop': {
-                cssModules: true,
-                esModules: true,
-                graphqlQueries: true,
-                rootComponents: false,
-                upward: false
-            },
             '@magento/venia-concept': {
-                cssModules: true,
-                esModules: true,
-                graphqlQueries: true,
                 rootComponents: true,
-                upward: true
-            },
+            }
+
             // '@magento/venia-ui': {
             //     cssModules: true,
             //     esModules: true,
@@ -97,15 +91,19 @@ module.exports = async env => {
         ]
     });
 
-    // // test: /\.(mjs|js)$/
-    config.module.rules[1].use[0].options['plugins'] = ['@babel/plugin-transform-modules-commonjs'];
+    //test: /\.graphql$/
+     config.module.rules[0].include.push(parentThemeSrc);
+    // test: /\.(mjs|js)$/
+    config.module.rules[1].include.push(parentThemeSrc);
+    //test: /\.css$/
+    config.module.rules[2].oneOf[0].test.push(parentThemeSrc);
 
     // We overwrite the default resolve from magento
     config.resolve = {
         alias: {
-            parentSrc: path.resolve(parentTheme, 'src'),
-            parentComponents: path.resolve(parentTheme, 'src/components'),
-            parentQueries: path.resolve(parentTheme, 'src/queries')
+            parentSrc: parentThemeSrc,
+            parentComponents: path.resolve(parentThemeSrc, 'components'),
+            parentQueries: path.resolve(parentThemeSrc, 'queries')
         },
         modules: [__dirname, 'node_modules', parentTheme],
         mainFiles: ['index'],
