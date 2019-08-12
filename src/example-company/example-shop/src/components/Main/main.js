@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, shape, string } from 'prop-types';
 import { useScrollLock } from '@magento/peregrine';
 
-import { mergeClasses } from 'src/classify';
+import { mergeClasses } from 'src/classify'; 
 import Footer from 'src/components/Footer';
 
 import Header from 'parentComponents/Header';

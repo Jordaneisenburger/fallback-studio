@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { setContext } from 'apollo-link-context';
 import { Util } from '@magento/peregrine';
 import { Adapter } from '@magento/venia-drivers';
-import store from 'parentSrc/store';
+import store from 'parentSrc/store'; 
 import app from 'parentSrc/actions/app';
 import App, { AppContextProvider } from 'parentComponents/App';
 import 'parentSrc/index.css';
