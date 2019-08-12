@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { setContext } from 'apollo-link-context';
-import { Util, WindowSizeContextProvider } from '@magento/peregrine';
-
-import { Adapter } from 'parentSrc/drivers';
+import { Util } from '@magento/peregrine';
+import { Adapter } from '@magento/venia-drivers';
 import store from 'parentSrc/store';
 import app from 'parentSrc/actions/app';
-import App from 'parentComponents/App';
+import App, { AppContextProvider } from 'parentComponents/App';
 import 'parentSrc/index.css';
-import { ToastContextProvider } from '@magento/peregrine';
 
 // we create this file here instead of scss because of loading order
 import './general.css';
@@ -41,26 +39,27 @@ ReactDOM.render(
         apollo={{ link: authLink.concat(Adapter.apolloLink(apiBase)) }}
         store={store}
     >
-        <WindowSizeContextProvider>
-            <ToastContextProvider>
-                <App />
-            </ToastContextProvider>
-        </WindowSizeContextProvider>
+        <AppContextProvider>
+            <App />
+        </AppContextProvider>
     </Adapter>,
     document.getElementById('root')
 );
 
-if (process.env.SERVICE_WORKER && 'serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
+if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.DEV_SERVER_SERVICE_WORKER_ENABLED
+) {
+    window.addEventListener('load', () =>
         navigator.serviceWorker
-            .register(process.env.SERVICE_WORKER)
+            .register('sw.js')
             .then(registration => {
                 console.log('Service worker registered: ', registration);
             })
             .catch(error => {
                 console.log('Service worker registration failed: ', error);
-            });
-    });
+            })
+    );
 }
 
 window.addEventListener('online', () => {

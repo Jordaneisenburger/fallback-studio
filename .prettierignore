@@ -1,0 +1,10 @@
+# Generated coverage pages
+coverage
+# Minified build assets
+dist
+storybook-dist
+# Devdocs is a separate project
+pwa-devdocs
+
+# Dangerfile is maintained in the pwa-studio-cicd repo and symlinked during build
+dangerfile.js
