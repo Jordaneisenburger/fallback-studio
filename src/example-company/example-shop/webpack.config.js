@@ -1,4 +1,4 @@
-const { configureWebpack } = require('../../pwa-studio/packages/pwa-buildpack/lib/index');
+const { configureWebpack } = require('@magento/pwa-buildpack');
 const NormalModuleOverridePlugin = require('./normalModuleOverrideWebpackPlugin');
 const componentOverrideMapping = require('./componentOverrideMapping');
 
@@ -29,13 +29,6 @@ module.exports = async env => {
             'redux-thunk'
         ],
         special: {
-            '@magento/venia-concept': {
-                cssModules: true,
-                esModules: true,
-                graphqlQueries: true,
-                rootComponents: true,
-                upward: true
-            },
             '@magento/peregrine': {
                 esModules: true
             },
@@ -45,6 +38,13 @@ module.exports = async env => {
                 graphqlQueries: true,
                 rootComponents: false,
                 upward: false
+            },
+            '@magento/venia-concept': {
+                cssModules: true,
+                esModules: true,
+                graphqlQueries: true,
+                rootComponents: true,
+                upward: true
             },
             // '@magento/venia-ui': {
             //     cssModules: true,
@@ -96,6 +96,9 @@ module.exports = async env => {
             }
         ]
     });
+
+    // // test: /\.(mjs|js)$/
+    config.module.rules[1].use[0].options['plugins'] = ['@babel/plugin-transform-modules-commonjs'];
 
     // We overwrite the default resolve from magento
     config.resolve = {
