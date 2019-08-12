@@ -1,0 +1,51 @@
+.root {
+    padding: 1rem;
+}
+
+.categoryTop {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 1rem 0;
+    color: rgb(var(--venia-text-alt));
+    justify-content: center;
+    align-items: center;
+}
+
+.categoryFilters {
+    text-align: right;
+    flex-grow: 1;
+}
+
+.categoryFilter {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    border: 1px solid rgb(var(--venia-border));
+    padding: 0.25rem 0.5rem;
+}
+
+.categoryFilterText {
+    padding-right: 0.5rem;
+}
+
+.noResult {
+    display: flex;
+}
+
+.headerButtons {
+    display: flex;
+    justify-content: center;
+    flex-basis: 100%;
+    padding-top: 0.5rem;
+}
+
+.filterButton {
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 9rem;
+    border: 1px solid black;
+    border-radius: 100px;
+    color: black;
+    outline: none;
+}

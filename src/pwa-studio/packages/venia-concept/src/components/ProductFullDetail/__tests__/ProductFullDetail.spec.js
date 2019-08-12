@@ -4,14 +4,14 @@ import {
     createTestInstance
 } from '@magento/peregrine';
 
-import ProductFullDetail from '../ProductFullDetail';
+import ProductFullDetail from '../productFullDetail';
 
 jest.mock('react', () => {
     const React = jest.requireActual('react');
 
     return Object.assign(React, { useState: jest.fn(React.useState) });
 });
-jest.mock('src/classify');
+jest.mock('../../../classify');
 
 const mockConfigurableProduct = {
     __typename: 'ConfigurableProduct',
@@ -125,7 +125,6 @@ test('Configurable Product with selections has correct media gallery image count
         // optionSelections
         .mockReturnValueOnce([new Map([['1', 1]]), jest.fn()]);
 
-    debugger;
     const { root } = createTestInstance(
         <WindowSizeContextProvider>
             <ProductFullDetail

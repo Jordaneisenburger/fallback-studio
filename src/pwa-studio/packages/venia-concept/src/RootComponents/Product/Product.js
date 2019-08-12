@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { string, func } from 'prop-types';
 
-import { connect, Query } from 'src/drivers';
-import { addItemToCart } from 'src/actions/cart';
-import { loadingIndicator } from 'src/components/LoadingIndicator';
-import ProductFullDetail from 'src/components/ProductFullDetail';
-import getUrlKey from 'src/util/getUrlKey';
-import productQuery from 'src/queries/getProductDetail.graphql';
+import { connect, Query } from '@magento/venia-drivers';
+import { addItemToCart } from '../../actions/cart';
+import ErrorView from '../../components/ErrorView';
+import { fullPageLoadingIndicator } from '../../components/LoadingIndicator';
+import ProductFullDetail from '../../components/ProductFullDetail';
+import getUrlKey from '../../util/getUrlKey';
+import productQuery from '../../queries/getProductDetail.graphql';
 
 /**
  * As of this writing, there is no single Product query type in the M2.3 schema.
@@ -48,9 +49,13 @@ class Product extends Component {
             >
                 {({ loading, error, data }) => {
                     if (error) return <div>Data Fetch Error</div>;
-                    if (loading) return loadingIndicator;
+                    if (loading) return fullPageLoadingIndicator;
 
                     const product = data.productDetail.items[0];
+
+                    if (!product) {
+                        return <ErrorView outOfStock={true} />;
+                    }
 
                     return (
                         <ProductFullDetail

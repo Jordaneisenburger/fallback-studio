@@ -1,6 +1,6 @@
 <!--
 Before submitting this pull request, please make sure you have read our Contribution Guidelines and your PR meets our contribution standards:
-https://github.com/magento-research/pwa-studio/blob/master/.github/CONTRIBUTING.md
+https://github.com/magento/pwa-studio/blob/master/.github/CONTRIBUTING.md
 
 Please fill out as much information as you can about your PR to help speed up the review process.
 If your PR addresses an existing GitHub Issue, please refer to it in the title or Additional Information section to make the connection.
@@ -11,6 +11,7 @@ Feel free to remove this section before creating this PR. Thank you for your con
 -->
 
 ## Description
+
 TODO: Describe your changes in detail here.
 
 ## Related Issue
@@ -27,18 +28,12 @@ Closes #ISSUE_NUMBER.
 2. Verify the BAR shows up.
 3. Make sure BAZ does a thing.
 
-## How have YOU tested this?
-<!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, and the tests you ran to -->
-<!--- see how your change affects other areas of the code, etc. -->
-TODO: Please describe in detail how you tested your changes.
-
-## Screenshots / Screen Captures (if appropriate):
+## Screenshots / Screen Captures (if appropriate)
 
 ## Proposed Labels for Change Type/Package
 <!--- What type of change level would you suggest for this PR? -->
 <!--- Major, Minor, or Patch? -->
-<!--- See https://magento-research.github.io/pwa-studio/technologies/versioning/ for help -->
+<!--- See https://pwastudio.io/technologies/versioning/ for help -->
 - [ ] major (e.g x.0.0 - a breaking change)
 - [ ] minor (e.g 0.x.0 - a backwards compatible addition)
 - [ ] patch (e.g 0.0.x - a bug fix)
