@@ -28,10 +28,10 @@
     },
     "repository": "github:jordaneisenburger/fallback-studio",
     "author": "Jordan Eisenburger",
+    "license": "(OSL-3.0 OR AFL-3.0)",
     "bugs": {
         "url": "https://github.com/jordaneisenburger/fallback-studio/issues"
     },
-    "license": "(OSL-3.0 OR AFL-3.0)",
     "dependencies": {},
     "devDependencies": {
         "@babel/core": "~7.3.4",
