@@ -37,7 +37,7 @@ module.exports = async env => {
                 esModules: true
             },
             '@magento/venia-concept': {
-                rootComponents: true,
+                rootComponents: true
             }
 
             // '@magento/venia-ui': {
@@ -92,7 +92,7 @@ module.exports = async env => {
     });
 
     //test: /\.graphql$/
-     config.module.rules[0].include.push(parentThemeSrc);
+    config.module.rules[0].include.push(parentThemeSrc);
     // test: /\.(mjs|js)$/
     config.module.rules[1].include.push(parentThemeSrc);
     //test: /\.css$/

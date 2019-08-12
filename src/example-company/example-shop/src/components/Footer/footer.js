@@ -5,7 +5,7 @@ import classify from 'parentSrc/classify';
 import defaultClasses from 'parentComponents/Footer/footer.css';
 import storeConfigDataQuery from '../../queries/getStoreConfigData.graphql';
 import { Query } from '@magento/venia-drivers';
- 
+
 class Footer extends Component {
     static propTypes = {
         classes: PropTypes.shape({

@@ -35,8 +35,8 @@ module.exports = class NormalModuleOverridePlugin {
             (result, x) => ({
                 ...result,
                 [require.resolve(x)]:
-                this.requireResolveIfCan(map[x]) ||
-                this.resolveModulePath(context, map[x])
+                    this.requireResolveIfCan(map[x]) ||
+                    this.resolveModulePath(context, map[x])
             }),
             {}
         );
