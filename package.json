@@ -13,6 +13,7 @@
         "src/pwa-studio/packages/upward-js",
         "src/pwa-studio/packages/upward-spec",
         "src/pwa-studio/packages/venia-concept",
+        "src/pwa-studio/packages/venia-ui",
         "src/example-company/example-shop"
     ],
     "storefront": {
@@ -69,11 +70,11 @@
         "jest-transform-graphql": "~2.1.0",
         "lerna": "~3.13.0",
         "lodash.debounce": "~4.0.8",
+        "node-sass": "~4.10.0",
         "prettier": "~1.16.4",
         "prettier-check": "~2.0.0",
-        "sass-loader": "~7.1.0",
-        "node-sass": "~4.10.0",
-        "rimraf": "2.6.2"
+        "rimraf": "~3.0.0",
+        "sass-loader": "~7.1.0"
     },
     "optionalDependencies": {
         "bundlesize": "~0.17.1",
