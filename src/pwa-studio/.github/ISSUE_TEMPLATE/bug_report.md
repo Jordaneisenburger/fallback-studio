@@ -21,7 +21,7 @@ Feel free to remove this section before creating this issue.
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+**To reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'
 2. Click on '....'
@@ -53,8 +53,10 @@ Add any ideas about possible solutions to the problem here.
 <!-- Complete the following sections to help us apply appropriate labels! -->
 **Please let us know what packages this bug is in regards to:**
 - [ ] `venia-concept`
+- [ ] `venia-ui`
 - [ ] `pwa-buildpack`
 - [ ] `peregrine`
 - [ ] `pwa-devdocs`
 - [ ] `upward-js`
 - [ ] `upward-spec`
+- [ ] `create-pwa`

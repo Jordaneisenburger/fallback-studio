@@ -32,8 +32,10 @@ Add any other context or screenshots about the feature request here.
 
 **Please let us know what packages this feature is in regards to:**
 - [ ] `venia-concept`
+- [ ] `venia-ui`
 - [ ] `pwa-buildpack`
 - [ ] `peregrine`
 - [ ] `pwa-devdocs`
 - [ ] `upward-js`
 - [ ] `upward-spec`
+- [ ] `create-pwa`

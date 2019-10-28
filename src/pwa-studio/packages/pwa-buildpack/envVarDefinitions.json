@@ -83,6 +83,12 @@
                     "type": "num",
                     "desc": "Specify the port the staging server should bind to. If this is set, it overrides the port chosen by custom origin settings.",
                     "default": 0
+                },
+                {
+                    "name": "STAGING_BUILD_ID",
+                    "type": "str",
+                    "desc": "Specify the id which Buildpack will put in a comment above all generated bundle files and the index.html file",
+                    "default": ""
                 }
             ]
         },
@@ -148,6 +154,17 @@
                     "type": "str",
                     "desc": "Specify a Braintree API token token to direct the Venia storefront to communicate with your Braintree instance. You can find this value in Braintree's Control Panel under Settings > API Keys > Tokenization Keys.",
                     "default": "sandbox_8yrzsvtm_s2bg8fs563crhqzk"
+                }
+            ]
+        },
+        {
+            "name": "Google Maps",
+            "variables": [
+                {
+                    "name": "GOOGLE_MAPS_API_KEY",
+                    "type": "str",
+                    "desc": "Specify a Google Maps API token for instantiating a Maps instance for your Page Builder map content type.",
+                    "default": ""
                 }
             ]
         }

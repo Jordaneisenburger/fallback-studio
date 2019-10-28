@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Options component correctly 1`] = `
+Array [
+  <div
+    className="root"
+  >
+    <h3
+      className="title"
+    >
+      <span>
+        option-1
+      </span>
+    </h3>
+    <div
+      className="root"
+    />
+    <dl
+      className="selection"
+    >
+      <dt
+        className="selectionLabel"
+      >
+        Selected option-1:
+      </dt>
+      <dd>
+        None
+      </dd>
+    </dl>
+  </div>,
+  <div
+    className="root"
+  >
+    <h3
+      className="title"
+    >
+      <span>
+        option-1
+      </span>
+    </h3>
+    <div
+      className="root"
+    />
+    <dl
+      className="selection"
+    >
+      <dt
+        className="selectionLabel"
+      >
+        Selected option-1:
+      </dt>
+      <dd>
+        None
+      </dd>
+    </dl>
+  </div>,
+]
+`;

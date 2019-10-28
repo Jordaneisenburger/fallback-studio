@@ -1,9 +1,21 @@
-const { configureWebpack } = require('@magento/pwa-buildpack');
+const {
+    configureWebpack,
+    graphQL: { getMediaURL, getUnionAndInterfaceTypes }
+} = require('@magento/pwa-buildpack');
+const { DefinePlugin } = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = async env => {
-    const config = await configureWebpack({
+    const mediaUrl = await getMediaURL();
+
+    global.MAGENTO_MEDIA_BACKEND_URL = mediaUrl;
+
+    const unionAndInterfaceTypes = await getUnionAndInterfaceTypes();
+
+    const { clientConfig, serviceWorkerConfig } = await configureWebpack({
         context: __dirname,
         vendor: [
+            '@apollo/react-hooks',
             'apollo-cache-inmemory',
             'apollo-cache-persist',
             'apollo-client',
@@ -11,7 +23,6 @@ module.exports = async env => {
             'apollo-link-http',
             'informed',
             'react',
-            'react-apollo',
             'react-dom',
             'react-feather',
             'react-redux',
@@ -21,27 +32,51 @@ module.exports = async env => {
             'redux-thunk'
         ],
         special: {
-            '@magento/peregrine': {
+            'react-feather': {
                 esModules: true
+            },
+            '@magento/peregrine': {
+                esModules: true,
+                cssModules: true
+            },
+            '@magento/venia-ui': {
+                cssModules: true,
+                esModules: true,
+                graphqlQueries: true,
+                rootComponents: true,
+                upward: true
             }
-            // '@magento/venia-ui': {
-            //     cssModules: true,
-            //     esModules: true,
-            //     graphqlQueries: true,
-            //     rootComponents: true,
-            //     upward: true
-            // }
         },
         env
     });
 
-    // configureWebpack() returns a regular Webpack configuration object.
-    // You can customize the build by mutating the object here, as in
-    // this example:
-    config.module.noParse = [/braintree\-web\-drop\-in/];
-    // Since it's a regular Webpack configuration, the object supports the
-    // `module.noParse` option in Webpack, documented here:
-    // https://webpack.js.org/configuration/module/#modulenoparse
+    /**
+     * configureWebpack() returns a regular Webpack configuration object.
+     * You can customize the build by mutating the object here, as in
+     * this example. Since it's a regular Webpack configuration, the object
+     * supports the `module.noParse` option in Webpack, documented here:
+     * https://webpack.js.org/configuration/module/#modulenoparse
+     */
+    clientConfig.module.noParse = [/braintree\-web\-drop\-in/];
+    clientConfig.plugins = [
+        ...clientConfig.plugins,
+        new DefinePlugin({
+            /**
+             * Make sure to add the same constants to
+             * the globals object in jest.config.js.
+             */
+            UNION_AND_INTERFACE_TYPES: JSON.stringify(unionAndInterfaceTypes),
+            STORE_NAME: JSON.stringify('Venia')
+        }),
+        new HTMLWebpackPlugin({
+            filename: 'index.html',
+            template: './template.html',
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true
+            }
+        })
+    ];
 
-    return config;
+    return [clientConfig, serviceWorkerConfig];
 };

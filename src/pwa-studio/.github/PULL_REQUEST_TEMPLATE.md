@@ -22,24 +22,26 @@ TODO: Describe your changes in detail here.
 <!--- Using the above wording causes Github to automatically close the issue on merge. -->
 Closes #ISSUE_NUMBER.
 
-## Verification Steps
-<!-- Please describe in detail how a reviewer can verify your changes. -->
+## Acceptance 
+<!-- The people and processes this pull request needs before it is merged. -->
+<!-- These fields are not required when opening the pull request, but they -->
+<!-- should be populated after code review. -->
+### Verification Stakeholders
+<!-- People who must verify that this solves the attached issue. -->
+### Specification
+<!-- Changes to `upward-spec` and/or `upward-js` packages must be reviewed -->
+<!-- by `UPWARD-PHP` maintainers to ensure continued compatibility -->
+
+### Verification Steps
+<!-- Please describe in detail how a reviewer can verify your changes, -->
+<!-- OR how you will demonstrate the changes to the stakeholder(s). -->
 1. Go to the FOO page.
 2. Verify the BAR shows up.
 3. Make sure BAZ does a thing.
 
 ## Screenshots / Screen Captures (if appropriate)
 
-## Proposed Labels for Change Type/Package
-<!--- What type of change level would you suggest for this PR? -->
-<!--- Major, Minor, or Patch? -->
-<!--- See https://pwastudio.io/technologies/versioning/ for help -->
-- [ ] major (e.g x.0.0 - a breaking change)
-- [ ] minor (e.g 0.x.0 - a backwards compatible addition)
-- [ ] patch (e.g 0.0.x - a bug fix)
-
-## Checklist:
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] I have updated the documentation accordingly, if necessary.
-- [ ] I have added tests to cover my changes, if necessary.
+## Checklist
+<!--- Go over all the following points, and make sure you've done anything necessary -->
+* I have updated the documentation accordingly, if necessary.
+* I have added tests to cover my changes, if necessary.

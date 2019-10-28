@@ -1,6 +1,6 @@
 {
   "name": "graphql-cli-validate-magento-pwa-queries",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -9,6 +9,7 @@
   "scripts": {
     "build": "cp ../../magento-compatibility.js ./lib/",
     "clean": "rimraf ./lib/magento-compatibility.js ./node_modules",
+    "prepare": "yarn run -s build",
     "test": "jest"
   },
   "repository": "https://github.com/magento/pwa-studio",
