@@ -1,6 +1,6 @@
 {
     "name": "fallback-studio",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "description": "Fallback wrapper for Magento PWA Studio",
     "author": "Jordan Eisenburger",
     "homepage": "https://github.com/Jordaneisenburger/fallback-studio",

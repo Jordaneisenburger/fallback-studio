@@ -2,15 +2,14 @@ import React from 'react';
 import { bool, shape, string } from 'prop-types';
 import { useScrollLock } from '@magento/peregrine';
 
-import { mergeClasses } from 'src/classify';
-import Footer from 'src/components/Footer';
-
-import Header from 'parentComponents/Header';
-import TopBar from 'src/components/TopBar';
-import defaultClasses from 'parentComponents/Main/main.css';
+import { mergeClasses } from '~veniaUi/lib/classify';
+import Footer from '../Footer';
+import Header from '~veniaUi/lib/components/Header';
+import TopBar from '../TopBar';
+import defaultClasses from '~veniaUi/lib/components/Main/main.css';
 
 const Main = props => {
-    const { children, hasBeenOffline, isMasked, isOnline } = props;
+    const { children, isMasked } = props;
     const classes = mergeClasses(defaultClasses, props.classes);
 
     const rootClass = isMasked ? classes.root_masked : classes.root;
@@ -21,7 +20,7 @@ const Main = props => {
     return (
         <main className={rootClass}>
             <TopBar />
-            <Header hasBeenOffline={hasBeenOffline} isOnline={isOnline} />
+            <Header />
             <div className={pageClass}>{children}</div>
             <Footer />
         </main>
@@ -37,7 +36,5 @@ Main.propTypes = {
         root: string,
         root_masked: string
     }),
-    hasBeenOffline: bool,
-    isMasked: bool,
-    isOnline: bool
+    isMasked: bool
 };

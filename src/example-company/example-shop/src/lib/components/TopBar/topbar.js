@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import classify from 'parentSrc/classify';
+import classify from '~veniaUi/lib/classify';
 import defaultClasses from './topbar.scss';
 import { shape, string } from 'prop-types';
 
@@ -16,7 +16,7 @@ class TopBar extends Component {
 
         return (
             <div className={classes.root}>
-                A custom react component on top of venia-concept
+                A custom react component on top of venia-ui
             </div>
         );
     }

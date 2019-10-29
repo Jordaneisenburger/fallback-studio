@@ -1,9 +1,9 @@
 const path = require('path');
 const parentComponents = path.resolve(
-    process.cwd() + '/../../pwa-studio/packages/venia-concept/src/components'
+    process.cwd() + '/../../pwa-studio/packages/venia-ui'
 );
 
 module.exports = componentOverride = {
-    [`${parentComponents}/Main`]: `src/components/Main`,
-    [`${parentComponents}/Footer`]: 'src/components/Footer'
+    [`${parentComponents}/lib/components/Main`]: 'src/lib/components/Main',
+    [`${parentComponents}/lib/components/Footer`]: 'src/lib/components/Footer'
 };
