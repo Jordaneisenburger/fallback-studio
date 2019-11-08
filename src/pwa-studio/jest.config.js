@@ -37,7 +37,159 @@ const path = require('path');
 // Reusable glob string for building `testMatch` patterns.
 // All testable code in packages lives at either 'src' for code that must
 // transpile, or 'lib' for code that doesn't have to.
-const testGlob = '/**/{src,lib}/**/__tests__/*.(test|spec).js';
+const testGlob = '/**/{src,lib,_buildpack}/**/__tests__/*.(test|spec).js';
+
+// Reusable test configuration for Venia UI and storefront packages.
+const testVenia = inPackage => ({
+    // Expose jsdom to tests.
+    browser: true,
+    moduleNameMapper: {
+        // Mock binary files to avoid excess RAM usage.
+        '\\.(jpg|jpeg|png)$':
+            '<rootDir>/packages/venia-ui/__mocks__/fileMock.js',
+        // CSS module classes are dynamically generated, but that makes
+        // it hard to test React components using DOM classnames.
+        // This mapping forces CSS Modules to return literal identies,
+        // so e.g. `classes.root` is always `"root"`.
+        '\\.css$': 'identity-obj-proxy',
+        '\\.svg$': 'identity-obj-proxy'
+    },
+    // Reproduce the Webpack resolution config that lets Venia import
+    // from `src` instead of with relative paths:
+    modulePaths: [
+        inPackage(),
+        inPackage('node_modules'),
+        '<rootDir>/node_modules'
+    ],
+    // Set up Enzyme React 16 adapter for testing React components
+    setupFilesAfterEnv: [
+        path.join('<rootDir>', 'scripts', 'jest-enzyme-setup.js')
+    ],
+    // Give jsdom a real URL for router testing.
+    testURL: 'http://localhost/',
+    transform: {
+        // Reproduce the Webpack `graphql-tag/loader` that lets Venia
+        // import `.graphql` files into JS.
+        '\\.(gql|graphql)$': 'jest-transform-graphql',
+        // Use the default babel-jest for everything else.
+        '\\.(js|css)$': 'babel-jest'
+    },
+    // Normally babel-jest ignores node_modules and only transpiles the current
+    // package's source. The below setting forces babel-jest to transpile
+    // @magento namespaced packages like Peregrine and Venia UI as well, when
+    // it's testing Venia. That way, changes in sibling packages don't require a
+    // full compile.
+    transformIgnorePatterns: [
+        'node_modules/(?!@magento|jarallax|video-worker/)'
+    ],
+    globals: {
+        UNION_AND_INTERFACE_TYPES: {
+            __schema: {
+                types: [
+                    {
+                        kind: 'INTERFACE',
+                        name: 'ProductInterface',
+                        possibleTypes: [
+                            { name: 'VirtualProduct' },
+                            { name: 'SimpleProduct' },
+                            { name: 'DownloadableProduct' },
+                            { name: 'BundleProduct' },
+                            { name: 'GiftCardProduct' },
+                            { name: 'GroupedProduct' },
+                            { name: 'ConfigurableProduct' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'MediaGalleryInterface',
+                        possibleTypes: [
+                            { name: 'ProductImage' },
+                            { name: 'ProductVideo' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'ProductLinksInterface',
+                        possibleTypes: [{ name: 'ProductLinks' }]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'CategoryInterface',
+                        possibleTypes: [{ name: 'CategoryTree' }]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'LayerFilterItemInterface',
+                        possibleTypes: [
+                            { name: 'LayerFilterItem' },
+                            { name: 'SwatchLayerFilterItem' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'PhysicalProductInterface',
+                        possibleTypes: [
+                            { name: 'SimpleProduct' },
+                            { name: 'BundleProduct' },
+                            { name: 'GiftCardProduct' },
+                            { name: 'GroupedProduct' },
+                            { name: 'ConfigurableProduct' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'CustomizableOptionInterface',
+                        possibleTypes: [
+                            { name: 'CustomizableAreaOption' },
+                            { name: 'CustomizableDateOption' },
+                            { name: 'CustomizableDropDownOption' },
+                            { name: 'CustomizableMultipleOption' },
+                            { name: 'CustomizableFieldOption' },
+                            { name: 'CustomizableFileOption' },
+                            { name: 'CustomizableRadioOption' },
+                            { name: 'CustomizableCheckboxOption' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'CustomizableProductInterface',
+                        possibleTypes: [
+                            { name: 'VirtualProduct' },
+                            { name: 'SimpleProduct' },
+                            { name: 'DownloadableProduct' },
+                            { name: 'BundleProduct' },
+                            { name: 'GiftCardProduct' },
+                            { name: 'ConfigurableProduct' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'CartItemInterface',
+                        possibleTypes: [
+                            { name: 'SimpleCartItem' },
+                            { name: 'VirtualCartItem' },
+                            { name: 'ConfigurableCartItem' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'CartAddressInterface',
+                        possibleTypes: [
+                            { name: 'ShippingCartAddress' },
+                            { name: 'BillingCartAddress' }
+                        ]
+                    },
+                    {
+                        kind: 'INTERFACE',
+                        name: 'SwatchLayerFilterItemInterface',
+                        possibleTypes: [{ name: 'SwatchLayerFilterItem' }]
+                    }
+                ]
+            }
+        },
+        STORE_NAME: 'Venia'
+    }
+});
 
 const configureProject = (dir, displayName, cb) =>
     // Defaults that every project config must include.
@@ -85,53 +237,22 @@ const jestConfig = {
                 path.join('<rootDir>', 'scripts', 'jest-enzyme-setup.js')
             ],
             // Give jsdom a real URL for router testing.
-            testURL: 'https://localhost/'
+            testURL: 'http://localhost/'
         })),
-        configureProject('pwa-buildpack', 'Buildpack', () => ({
-            testEnvironment: 'node'
+        configureProject('pwa-buildpack', 'Buildpack', inPackage => ({
+            testEnvironment: 'node',
+            modulePaths: [
+                inPackage('lib/Utilities/__tests__/__fixtures__/modules')
+            ],
+            setupFiles: [inPackage('scripts/fetch-mock.js')]
         })),
         configureProject('upward-js', 'Upward JS', () => ({
             testEnvironment: 'node'
         })),
-        configureProject('venia-concept', 'Venia Concept', inPackage => ({
-            // Expose jsdom to tests.
-            browser: true,
-            moduleNameMapper: {
-                // Mock binary files to avoid excess RAM usage.
-                '\\.(jpg|jpeg|png)$': inPackage('__mocks__/fileMock.js'),
-                // CSS module classes are dynamically generated, but that makes
-                // it hard to test React components using DOM classnames.
-                // This mapping forces CSS Modules to return literal identies,
-                // so e.g. `classes.root` is always `"root"`.
-                '\\.css$': 'identity-obj-proxy',
-                '\\.svg$': 'identity-obj-proxy'
-            },
-            // Reproduce the Webpack resolution config that lets Venia import
-            // from `src` instead of with relative paths:
-            modulePaths: [
-                inPackage(),
-                inPackage('node_modules'),
-                '<rootDir>/node_modules'
-            ],
-            // Set up Enzyme React 16 adapter for testing React components
-            setupFilesAfterEnv: [
-                path.join('<rootDir>', 'scripts', 'jest-enzyme-setup.js')
-            ],
-            // Give jsdom a real URL for router testing.
-            testURL: 'https://localhost/',
-            transform: {
-                // Reproduce the Webpack `graphql-tag/loader` that lets Venia
-                // import `.graphql` files into JS.
-                '\\.(gql|graphql)$': 'jest-transform-graphql',
-                // Use the default babel-jest for everything else.
-                '.*': 'babel-jest'
-            },
-            // Normally babel-jest ignores node_modules and only transpiles the
-            // current package's source. This forces babel-jest to transpile
-            // Peregrine as well, when it's testing Venia. That way, Peregrine
-            // changes don't require a full compile.
-            transformIgnorePatterns: ['node_modules/(?!@magento/peregrine)']
-        })),
+        configureProject('venia-concept', 'Venia Storefront', inPackage =>
+            testVenia(inPackage)
+        ),
+        configureProject('venia-ui', 'Venia UI', testVenia),
         // Test any root CI scripts as well, to ensure stable CI behavior.
         configureProject('scripts', 'CI Scripts', () => ({
             testEnvironment: 'node',
@@ -155,11 +276,14 @@ const jestConfig = {
     collectCoverage: true,
     collectCoverageFrom: [
         // Code directories
-        'packages/*/{src,lib}/**/*.js',
+        'packages/*/{src,lib,_buildpack}/**/*.js',
+        // Not the create-pwa package, which requires manual testing
+        '!packages/create-pwa/**/*.js',
         // Not node_modules
         '!**/node_modules/**',
         // Not __tests__, __helpers__, or __any_double_underscore_folders__
         '!**/__[[:alpha:]]*__/**',
+        '!**/.*/__[[:alpha:]]*__/**',
         // Not this file itself
         '!jest.config.js'
     ],

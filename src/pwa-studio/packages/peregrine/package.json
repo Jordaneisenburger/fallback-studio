@@ -1,6 +1,6 @@
 {
   "name": "@magento/peregrine",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -18,19 +18,26 @@
   "homepage": "https://github.com/magento/pwa-studio/tree/master/packages/peregrine#readme",
   "devDependencies": {
     "intl": "~1.2.5",
-    "react": "~16.8.3",
-    "react-apollo": "~2.5.5",
-    "react-dom": "~16.8.3",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-redux": "~7.1.1",
     "react-router-dom": "~5.0.0",
-    "react-test-renderer": "~16.8.6",
+    "react-test-renderer": "~16.9.0",
+    "redux": "~4.0.4",
+    "redux-actions": "~2.6.5",
     "wait-for-expect": "~1.2.0"
   },
   "peerDependencies": {
-    "@babel/runtime": "^7.4.2",
-    "react": "^16.8.0",
-    "react-apollo": "^2.5.3",
-    "react-dom": "^16.8.0",
-    "react-router-dom": "~5.0.0"
+    "@apollo/react-hooks": "~3.1.2",
+    "@babel/runtime": "~7.4.2",
+    "apollo-client": "~2.6.4",
+    "informed": "~2.1.13",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-redux": "~7.1.1",
+    "react-router-dom": "~5.0.0",
+    "redux": "~4.0.4",
+    "redux-actions": "~2.6.5"
   },
   "engines": {
     "node": ">=10.x",

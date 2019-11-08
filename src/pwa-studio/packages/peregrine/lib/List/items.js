@@ -1,104 +1,102 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useMemo } from 'react';
+import { array, func, object, oneOf, oneOfType, string } from 'prop-types';
 
-import memoize from '../util/unaryMemoize';
 import iterable from '../validators/iterable';
-import ListItem from './item';
+import Item from './item';
+import { useListState } from './useListState';
 
-const removeFocus = () => ({
-    hasFocus: false
-});
+/**
+ * The **Items** component is a container holding all the items
+ *
+ * @typedef Items
+ * @kind functional component
+ *
+ * @param {props} props
+ *
+ * @returns{React.Element} A React component container for all the items in list.
+ */
+const Items = props => {
+    const {
+        getItemKey,
+        initialSelection,
+        items,
+        onSelectionChange,
+        renderItem,
+        selectionModel
+    } = props;
 
-const updateCursor = memoize(index => () => ({
-    cursor: index,
-    hasFocus: true
-}));
+    const [state, api] = useListState({
+        getItemKey,
+        initialSelection,
+        onSelectionChange,
+        selectionModel
+    });
+    const { cursor, hasFocus, selectedKeys } = state;
+    const { removeFocus, setFocus, updateSelectedKeys } = api;
 
-const updateSelection = memoize(key => (prevState, props) => {
-    const { selectionModel } = props;
-    let selection;
-
-    if (selectionModel === 'radio') {
-        selection = new Set().add(key);
-    }
-
-    if (selectionModel === 'checkbox') {
-        selection = new Set(prevState.selection);
-
-        if (selection.has(key)) {
-            selection.delete(key);
-        } else {
-            selection.add(key);
-        }
-    }
-
-    return { selection };
-});
-
-class Items extends Component {
-    static propTypes = {
-        getItemKey: PropTypes.func.isRequired,
-        items: iterable.isRequired,
-        renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-        selectionModel: PropTypes.oneOf(['checkbox', 'radio'])
-    };
-
-    static defaultProps = {
-        getItemKey: ({ id }) => id,
-        selectionModel: 'radio'
-    };
-
-    state = {
-        cursor: null,
-        hasFocus: false,
-        selection: new Set()
-    };
-
-    render() {
-        const { getItemKey, items, renderItem } = this.props;
-        const { cursor, hasFocus, selection } = this.state;
-
-        const children = Array.from(items, (item, index) => {
+    const children = useMemo(() => {
+        return Array.from(items, (item, index) => {
             const key = getItemKey(item, index);
 
             return (
-                <ListItem
-                    key={key}
+                <Item
+                    hasFocus={hasFocus && cursor === key}
+                    isSelected={selectedKeys.has(key)}
                     item={item}
                     itemIndex={index}
+                    key={key}
+                    onBlur={removeFocus}
                     render={renderItem}
-                    hasFocus={hasFocus && cursor === index}
-                    isSelected={selection.has(key)}
-                    onBlur={this.handleBlur}
-                    onClick={this.getClickHandler(key)}
-                    onFocus={this.getFocusHandler(index)}
+                    setFocus={setFocus}
+                    uniqueId={key}
+                    updateSelectedKeys={updateSelectedKeys}
                 />
             );
         });
+    }, [
+        cursor,
+        getItemKey,
+        hasFocus,
+        items,
+        removeFocus,
+        renderItem,
+        selectedKeys,
+        setFocus,
+        updateSelectedKeys
+    ]);
 
-        return <Fragment>{children}</Fragment>;
-    }
+    return <Fragment>{children}</Fragment>;
+};
 
-    syncSelection() {
-        const { selection } = this.state;
-        const { onSelectionChange } = this.props;
+/**
+ * props for {@link Items}
+ *
+ * @typedef props
+ *
+ * @property {func} getItemKey item key value getter
+ * @property {array | object} initialSelection A single or list of objects that should start off selected
+ * @property {iterable} items An iterable that yields `[key, item]` pairs such as an ES2015 Map
+ * @property {func} onSelectionChange A callback that fires when the selection state changes
+ * @property {func | string} renderItem A render prop for the list item elements. A tagname string, such as `"div"`, is also valid
+ * @property {checkbox | radio} selectionModel A string corresponding to a selection model
+ */
+Items.propTypes = {
+    getItemKey: func.isRequired,
+    initialSelection: oneOfType([array, object]),
+    items: iterable.isRequired,
+    onSelectionChange: func,
+    renderItem: oneOfType([func, string]),
+    selectionModel: oneOf(['checkbox', 'radio'])
+};
 
-        if (onSelectionChange) {
-            onSelectionChange(selection);
-        }
-    }
-
-    handleBlur = () => {
-        this.setState(removeFocus);
-    };
-
-    getClickHandler = memoize(key => () => {
-        this.setState(updateSelection(key), this.syncSelection);
-    });
-
-    getFocusHandler = memoize(index => () => {
-        this.setState(updateCursor(index));
-    });
-}
+/**
+ * default props for {@link Items}
+ *
+ * @typedef @defaultProps
+ */
+Items.defaultProps = {
+    getItemKey: ({ id }) => id,
+    selectionModel: 'radio'
+};
 
 export default Items;

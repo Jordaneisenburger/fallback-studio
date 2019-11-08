@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the correct tree 1`] = `
+Array [
+  "Title",
+  <article
+    className="a"
+  >
+    <h1
+      className="b"
+    >
+      <div>
+        Name
+      </div>
+    </h1>
+    <section
+      className="c"
+    >
+      <Gallery
+        items={
+          Object {
+            "id": 1,
+          }
+        }
+      />
+    </section>
+    <div
+      className="d"
+    >
+      <Pagination
+        pageControl={Object {}}
+      />
+    </div>
+  </article>,
+]
+`;

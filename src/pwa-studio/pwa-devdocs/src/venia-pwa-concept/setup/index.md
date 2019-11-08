@@ -36,12 +36,27 @@ In the PWA Studio project's root directory, run the following command to install
 yarn install
 ```
 
-## Step 3. Create the `.env` file
+## Step 3. Generate SSL certificate
+
+PWA features require an HTTPS secure domain.
+
+In the root directory, use the `create-custom-origin` sub-command for the `buildpack` CLI tool to generate a trusted SSL certificate for the Venia storefront application:
+
+```sh
+yarn buildpack create-custom-origin packages/venia-concept
+```
+
+{: .bs-callout .bs-callout-info}
+This feature requires administrative access, so
+it may prompt you for an administrative password at the command line.
+It does not permanently elevate permissions for the dev process but instead, launches a privileged subprocess to execute one command.
+
+## Step 4. Create the `.env` file
 
 Use the `create-env-file` subcommand for the `buildpack` CLI tool to create a `.env` file for Venia.
 The subcommand generates a `packages/venia-concept/.env` file where you can set the value of `MAGENTO_BACKEND_URL` to the URL of a running Magento instance.
 
-You can create the `.env` file and set the `MAGENTO_BACKEND_URL` value at the same time using the following command:
+You can create the `.env` file and set the `MAGENTO_BACKEND_URL` value at the same time using a command similar to the following:
 
 ```sh
 MAGENTO_BACKEND_URL="https://master-7rqtwti-mfwmkrjfqvbjk.us-4.magentosite.cloud/" yarn buildpack create-env-file packages/venia-concept
@@ -74,20 +89,10 @@ The Venia storefront has been verified to be compatible with the following local
 
 Don't forget to install the [Venia sample data][]!
 
-## Step 4. Generate SSL certificate
-
-PWA features require an HTTPS secure domain.
-
-In the root directory, use the `create-custom-origin` sub-command for the `buildpack` CLI tool to generate a trusted SSL certificate for the Venia package:
-
-```sh
-yarn buildpack create-custom-origin packages/venia-concept
-```
-
 {: .bs-callout .bs-callout-info}
-This feature requires administrative access, so
-it may prompt you for an administrative password at the command line.
-It does not permanently elevate permissions for the dev process but instead, launches a privileged subprocess to execute one command.
+In case you connected to a development Magento environment that has a self-signed SSL-certificate, you might run into an `request to [BACKEND_URL] failed, reason: self signed certificate` error when running `yarn run build` or `yarn run watch`.
+This can be circumvented by adding `NODE_TLS_REJECT_UNAUTHORIZED=0` to `packages/venia-concept/.env`.
+Or, alternatively, you could add the variable to the `yarn` command, e.g. `NODE_TLS_REJECT_UNAUTHORIZED=0 yarn run build` or `NODE_TLS_REJECT_UNAUTHORIZED=0 yarn run watch:venia`
 
 ## Step 5. Start the server
 

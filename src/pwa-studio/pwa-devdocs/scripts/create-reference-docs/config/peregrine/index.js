@@ -28,23 +28,19 @@ module.exports = [
         type: 'function'
     },
     {
-        target: 'peregrine/lib/hooks/useApolloContext.js',
-        type: 'function'
-    },
-    {
         target: 'peregrine/lib/hooks/useSearchParam.js',
         type: 'function'
     },
     {
-        target: 'peregrine/lib/hooks/useQuery.js',
-        type: 'function'
-    },
-    {
-        target: 'peregrine/lib/hooks/useQueryResult.js',
-        type: 'function'
-    },
-    {
         target: 'peregrine/lib/hooks/usePagination.js',
+        type: 'function'
+    },
+    {
+        target: 'peregrine/lib/Toasts/useToastContext.js',
+        type: 'function'
+    },
+    {
+        target: 'peregrine/lib/Toasts/useToasts.js',
         type: 'function'
     }
 ];
