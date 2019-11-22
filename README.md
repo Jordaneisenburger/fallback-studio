@@ -3,7 +3,7 @@
 [node]: https://img.shields.io/badge/Node-%3E%3D10.14.1-brightgreen.svg
 [node-url]: https://nodejs.org
 
-[pwa-studio]: https://img.shields.io/badge/pwa--studio-v3.0.0-brightgreen.svg
+[pwa-studio]: https://img.shields.io/badge/pwa--studio-v4.0.0-brightgreen.svg
 [pwa-studio-url]: https://github.com/magento-research/pwa-studio
 
 # README is partially outdated will be updated soon!
