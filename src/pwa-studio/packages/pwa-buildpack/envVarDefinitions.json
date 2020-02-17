@@ -12,6 +12,18 @@
             ]
         },
         {
+            "name": "Image Optimizing Origin",
+            "variables": [
+                {
+                    "name": "IMAGE_OPTIMIZING_ORIGIN",
+                    "type": "str",
+                    "choices": ["backend", "onboard"],
+                    "desc": "Specify the origin to use for images in the UI. Set to `backend` when Fastly or another CDN is optimizing images, and the frontend will load images directly from the Magento instance at MAGENTO_BACKEND_URL. If no image optimization is running on the backend, then set to `onboard`, or leave blank, ",
+                    "default": "onboard"
+                }
+            ]
+        },
+        {
             "name": "Custom local origin",
             "variables": [
                 {
@@ -152,8 +164,8 @@
                 {
                     "name": "CHECKOUT_BRAINTREE_TOKEN",
                     "type": "str",
-                    "desc": "Specify a Braintree API token token to direct the Venia storefront to communicate with your Braintree instance. You can find this value in Braintree's Control Panel under Settings > API Keys > Tokenization Keys.",
-                    "default": "sandbox_8yrzsvtm_s2bg8fs563crhqzk"
+                    "desc": "Specify a Braintree API token to direct the Venia storefront to communicate with your Braintree instance. You can find this value in Braintree's Control Panel under Settings > API Keys > Tokenization Keys.",
+                    "example": "sandbox_8yrzsvtm_s2bg8fs563crhqzk"
                 }
             ]
         },
@@ -170,6 +182,18 @@
         }
     ],
     "changes": [
+        {
+            "name": "CHECKOUT_BRAINTREE_TOKEN",
+            "type": "defaultChanged",
+            "reason": "confusion about whether developers should provide their own Braintree tokens for their own sites. An example value is provided instead for development purposes",
+            "original": "sandbox_8yrzsvtm_s2bg8fs563crhqzk"
+        },
+        {
+            "name": "CHECKOUT_BRAINTREE_TOKEN",
+            "type": "exampleChanged",
+            "reason": "confusion about the purpose of the previously provided default value. An example is provided instead for development purposes",
+            "original": "(none)"
+        },
         {
             "name": "UPWARD_JS_UPWARD_PATH",
             "type": "defaultChanged",

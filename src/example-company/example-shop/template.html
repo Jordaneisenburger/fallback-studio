@@ -21,8 +21,8 @@
             Apple Icons for Homescreen
             Sizes: https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/app-icon/
         -->
-        <link rel="apple-touch-icon" href="/static/icons/venia_square_57.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="/venia-static/icons/venia_square_57.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/venia-static/icons/apple-touch-icon.png">
         <link rel="preconnect" href="<%= process.env.MAGENTO_BACKEND_URL %>">
 
         <style type="text/css">
@@ -56,6 +56,32 @@
           </style>
     </head>
     <body>
-        <div id="root"></div>
+        <div id="root" />
+
+        <!-- Fallback for when JavaScript is disabled. -->
+        <noscript>
+            <style>
+                .fallback-nojs {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                }
+                .fallback-nojs a {
+                    color: currentColor;
+                }
+                .fallback-closed {
+                    height: 40vh;
+                }
+            </style>
+            <div class="fallback-nojs">
+                <img class="fallback-closed" alt="JavaScript is disabled" src="/venia-static/veniaClosed.png">
+                <h1 class="fallback-heading">Oops! JavaScript is disabled</h1>
+                <div>
+                  To browse the Venia store,<br>
+                  <a href="https://www.enable-javascript.com">enable JavaScript in your browser.</a>
+                </div>
+            </div>
+        </noscript>
     </body>
 </html>

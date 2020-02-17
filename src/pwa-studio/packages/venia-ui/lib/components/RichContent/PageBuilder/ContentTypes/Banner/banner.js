@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import defaultClasses from './banner.css';
 import { mergeClasses } from '../../../../../classify';
-import { arrayOf, bool, object, oneOf, shape, string } from 'prop-types';
+import { arrayOf, bool, oneOf, shape, string } from 'prop-types';
 import Button from '../../../../Button/button';
 import resolveLinkProps from '../../resolveLinkProps';
-import { Link, withRouter, resourceUrl } from '@magento/venia-drivers';
+import { Link, resourceUrl } from '@magento/venia-drivers';
 
 const toHTML = str => ({ __html: str });
 
@@ -46,7 +46,6 @@ const Banner = props => {
         buttonType,
         buttonText,
         link,
-        linkType,
         openInNewTab = false,
         showOverlay,
         overlayColor,
@@ -170,7 +169,7 @@ const Banner = props => {
     );
 
     if (typeof link === 'string') {
-        const linkProps = resolveLinkProps(link, linkType);
+        const linkProps = resolveLinkProps(link);
         const LinkComponent = linkProps.to ? Link : 'a';
         BannerFragment = (
             <LinkComponent
@@ -248,7 +247,6 @@ const Banner = props => {
  * @property {String} paddingBottom CSS padding bottom property
  * @property {String} paddingLeft CSS padding left property
  * @property {Array} cssClasses List of CSS classes to be applied to the component
- * @property {Object} history Browser history API
  */
 Banner.propTypes = {
     classes: shape({
@@ -303,8 +301,7 @@ Banner.propTypes = {
     paddingTop: string,
     paddingRight: string,
     paddingBottom: string,
-    cssClasses: arrayOf(string),
-    history: object
+    cssClasses: arrayOf(string)
 };
 
-export default withRouter(Banner);
+export default Banner;

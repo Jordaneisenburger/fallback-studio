@@ -24,7 +24,14 @@ const mockEnv = prod =>
     loadEnvironment.mockReturnValueOnce({
         env: process.env,
         sections: jest.fn(),
-        section: jest.fn(),
+        section: jest.fn(
+            key =>
+                ({
+                    devServer: {
+                        serviceWorkerEnabled: !!prod
+                    }
+                }[key])
+        ),
         isProd: prod
     });
 
@@ -141,6 +148,18 @@ test('errors when mode unrecognized', async () => {
     await expect(
         configureWebpack({ context: '.', env: { mode: 'wuh' } })
     ).rejects.toThrowError('wuh');
+});
+
+test('errors when environment is invalid', async () => {
+    simulate.statsAsDirectory().statsAsMissing();
+    loadEnvironment.mockReturnValueOnce({
+        env: process.env,
+        envFilePresent: false,
+        error: new Error('Configuration foo was invalid')
+    });
+    await expect(
+        configureWebpack({ context: '.', env: { mode: 'development' } })
+    ).rejects.toThrowError('foo was invalid');
 });
 
 test('handles special flags', async () => {

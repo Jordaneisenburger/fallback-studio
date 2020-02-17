@@ -1,37 +1,40 @@
 import React, { useMemo } from 'react';
 import { array, func, number, shape, string } from 'prop-types';
+
 import { Price } from '@magento/peregrine';
-
-import { mergeClasses } from '../../classify';
-import { resourceUrl } from '@magento/venia-drivers';
-
-import Image from '../Image';
+import { useProduct } from '@magento/peregrine/lib/talons/MiniCart/useProduct';
 import { transparentPlaceholder } from '@magento/peregrine/lib/util/images';
 
+import { mergeClasses } from '../../classify';
+import Image from '../Image';
 import Kebab from './kebab';
+import defaultClasses from './product.css';
 import ProductOptions from './productOptions';
 import Section from './section';
+import CREATE_CART_MUTATION from '../../queries/createCart.graphql';
+import REMOVE_ITEM_MUTATION from '../../queries/removeItem.graphql';
+import GET_CART_DETAILS_QUERY from '../../queries/getCartDetails.graphql';
 
-import defaultClasses from './product.css';
-import { useProduct } from '@magento/peregrine/lib/talons/MiniCart/useProduct';
+const PRODUCT_IMAGE_WIDTH = 80;
 
 const Product = props => {
-    const { beginEditItem, currencyCode, item, removeItemFromCart } = props;
+    const { beginEditItem, currencyCode, item } = props;
 
     const talonProps = useProduct({
         beginEditItem,
+        createCartMutation: CREATE_CART_MUTATION,
+        getCartDetailsQuery: GET_CART_DETAILS_QUERY,
         item,
-        removeItemFromCart
+        removeItemMutation: REMOVE_ITEM_MUTATION
     });
 
     const {
         handleEditItem,
         handleFavoriteItem,
         handleRemoveItem,
-        hasImage,
-        image,
         isFavorite,
         isLoading,
+        productImage,
         productName,
         productOptions,
         productPrice,
@@ -40,32 +43,27 @@ const Product = props => {
 
     const classes = mergeClasses(defaultClasses, props.classes);
 
-    const productImage = useMemo(() => {
-        const src = hasImage
-            ? resourceUrl(image.url, {
-                  type: image.type,
-                  width: image.width,
-                  height: image.height
-              })
-            : transparentPlaceholder;
+    const productImageComponent = useMemo(() => {
+        const imageProps = {
+            alt: productName,
+            classes: { image: classes.image, root: classes.imageContainer },
+            width: PRODUCT_IMAGE_WIDTH
+        };
 
-        return (
-            <Image
-                alt={productName}
-                classes={{ root: classes.image }}
-                placeholder={transparentPlaceholder}
-                src={src}
-                fileSrc={image.url}
-                sizes={`${image.width}px`}
-            />
-        );
-    }, [hasImage, image, productName, classes.image]);
+        if (!productImage) {
+            imageProps.src = transparentPlaceholder;
+        } else {
+            imageProps.resource = productImage;
+        }
+
+        return <Image {...imageProps} />;
+    }, [classes.image, classes.imageContainer, productImage, productName]);
 
     const mask = isLoading ? <div className={classes.mask} /> : null;
 
     return (
         <li className={classes.root}>
-            {productImage}
+            {productImageComponent}
             <div className={classes.name}>{productName}</div>
             <ProductOptions options={productOptions} />
             <div className={classes.quantity}>
@@ -114,8 +112,7 @@ Product.propTypes = {
         options: array,
         price: number,
         qty: number
-    }).isRequired,
-    removeItemFromCart: func.isRequired
+    }).isRequired
 };
 
 export default Product;

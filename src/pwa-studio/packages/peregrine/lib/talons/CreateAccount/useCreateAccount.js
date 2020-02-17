@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { useUserContext } from '@magento/peregrine/lib/context/user';
+import { useCartContext } from '@magento/peregrine/lib/context/cart';
+import { useAwaitQuery } from '@magento/peregrine/lib/hooks/useAwaitQuery';
 
 /**
  * Returns props necessary to render CreateAccount component. In particular this
@@ -9,7 +11,8 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
  *
  * @param {Object} props.initialValues initial values to sanitize and seed the form
  * @param {Function} props.onSubmit the post submit callback
- * @param {String} query the graphql query for creating the account
+ * @param {String} createAccountQuery the graphql query for creating the account
+ * @param {String} signInQuery the graphql query for logging in the user (and obtaining the token)
  * @returns {{
  *   errors: array,
  *   handleSubmit: function,
@@ -19,11 +22,39 @@ import { useUserContext } from '@magento/peregrine/lib/context/user';
  * }}
  */
 export const useCreateAccount = props => {
-    const { initialValues = {}, onSubmit, query } = props;
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const {
+        createAccountQuery,
+        createCartMutation,
+        customerQuery,
+        getCartDetailsQuery,
+        initialValues = {},
+        onSubmit,
+        signInMutation
+    } = props;
 
-    const [{ isSignedIn }, { signIn }] = useUserContext();
-    const [createAccount, { error }] = useMutation(query);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [, { createCart, getCartDetails, removeCart }] = useCartContext();
+    const [
+        { isGettingDetails, isSignedIn },
+        { getUserDetails, setToken }
+    ] = useUserContext();
+
+    const [createAccount, { error: createAccountError }] = useMutation(
+        createAccountQuery
+    );
+
+    const [fetchCartId] = useMutation(createCartMutation);
+    const [signIn, { error: signInError }] = useMutation(signInMutation);
+    const fetchUserDetails = useAwaitQuery(customerQuery);
+    const fetchCartDetails = useAwaitQuery(getCartDetailsQuery);
+
+    const errors = [];
+    if (createAccountError) {
+        errors.push(createAccountError.graphQLErrors[0]);
+    }
+    if (signInError) {
+        errors.push(signInError.graphQLErrors[0]);
+    }
 
     const handleSubmit = useCallback(
         async formValues => {
@@ -39,10 +70,30 @@ export const useCreateAccount = props => {
                     }
                 });
 
-                // Then sign the user in.
-                await signIn({
-                    username: formValues.customer.email,
-                    password: formValues.password
+                // Sign in and save the token
+                const response = await signIn({
+                    variables: {
+                        email: formValues.customer.email,
+                        password: formValues.password
+                    }
+                });
+
+                const token =
+                    response && response.data.generateCustomerToken.token;
+
+                await setToken(token);
+
+                await getUserDetails({ fetchUserDetails });
+
+                await removeCart();
+
+                await createCart({
+                    fetchCartId
+                });
+
+                await getCartDetails({
+                    fetchCartId,
+                    fetchCartDetails
                 });
 
                 // Finally, invoke the post-submission callback.
@@ -54,7 +105,19 @@ export const useCreateAccount = props => {
                 setIsSubmitting(false);
             }
         },
-        [createAccount, onSubmit, signIn]
+        [
+            createAccount,
+            createCart,
+            fetchCartDetails,
+            fetchCartId,
+            fetchUserDetails,
+            getCartDetails,
+            getUserDetails,
+            onSubmit,
+            removeCart,
+            setToken,
+            signIn
+        ]
     );
 
     const sanitizedInitialValues = useMemo(() => {
@@ -67,9 +130,9 @@ export const useCreateAccount = props => {
     }, [initialValues]);
 
     return {
-        errors: (error && error.graphQLErrors) || [],
+        errors,
         handleSubmit,
-        isDisabled: isSubmitting,
+        isDisabled: isSubmitting || isGettingDetails,
         isSignedIn,
         initialValues: sanitizedInitialValues
     };

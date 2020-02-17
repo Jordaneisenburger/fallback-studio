@@ -1,29 +1,86 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useUserContext } from '../../context/user';
-
-// Note: we can't access the actual message that comes back from the server
-// without doing some fragile string manipulation. Hardcoded for now.
-const ERROR_MESSAGE =
-    'The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.';
+import { useMutation } from '@apollo/react-hooks';
+import { useCartContext } from '../../context/cart';
+import { useAwaitQuery } from '../../hooks/useAwaitQuery';
 
 export const useSignIn = props => {
-    const { setDefaultUsername, showCreateAccount, showForgotPassword } = props;
+    const {
+        createCartMutation,
+        customerQuery,
+        getCartDetailsQuery,
+        setDefaultUsername,
+        showCreateAccount,
+        showForgotPassword,
+        signInMutation
+    } = props;
 
+    const [isSigningIn, setIsSigningIn] = useState(false);
+
+    const [, { createCart, getCartDetails, removeCart }] = useCartContext();
     const [
-        { isGettingDetails, isSigningIn, signInError, getDetailsError },
-        { signIn }
+        { isGettingDetails, getDetailsError },
+        { getUserDetails, setToken }
     ] = useUserContext();
 
-    const hasError = !!signInError || !!getDetailsError;
+    const [signIn, { error: signInError }] = useMutation(signInMutation);
+    const [fetchCartId] = useMutation(createCartMutation);
+    const fetchUserDetails = useAwaitQuery(customerQuery);
+    const fetchCartDetails = useAwaitQuery(getCartDetailsQuery);
+
+    const errors = [];
+    if (signInError) {
+        errors.push(signInError.graphQLErrors[0]);
+    }
+    if (getDetailsError) {
+        errors.push(getDetailsError);
+    }
 
     const formRef = useRef(null);
-    const errorMessage = hasError ? ERROR_MESSAGE : null;
 
     const handleSubmit = useCallback(
-        ({ email: username, password }) => {
-            signIn({ username, password });
+        async ({ email, password }) => {
+            setIsSigningIn(true);
+            try {
+                // Sign in and save the token
+                const response = await signIn({
+                    variables: { email, password }
+                });
+
+                const token =
+                    response && response.data.generateCustomerToken.token;
+
+                await setToken(token);
+                await getUserDetails({ fetchUserDetails });
+
+                // Then remove the old, guest cart and get the cart id from gql.
+                // TODO: This logic may be replacable with mergeCart in 2.3.4
+                await removeCart();
+
+                await createCart({
+                    fetchCartId
+                });
+
+                await getCartDetails({ fetchCartId, fetchCartDetails });
+            } catch (error) {
+                if (process.env.NODE_ENV === 'development') {
+                    console.error(error);
+                }
+
+                setIsSigningIn(false);
+            }
         },
-        [signIn]
+        [
+            createCart,
+            fetchCartDetails,
+            fetchCartId,
+            fetchUserDetails,
+            getCartDetails,
+            getUserDetails,
+            removeCart,
+            setToken,
+            signIn
+        ]
     );
 
     const handleForgotPassword = useCallback(() => {
@@ -47,7 +104,7 @@ export const useSignIn = props => {
     }, [setDefaultUsername, showCreateAccount]);
 
     return {
-        errorMessage,
+        errors,
         formRef,
         handleCreateAccount,
         handleForgotPassword,

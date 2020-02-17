@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import Button from '../../../../Button/button';
-import { arrayOf, oneOf, string, bool, object } from 'prop-types';
-import { withRouter } from '@magento/venia-drivers';
+import { arrayOf, oneOf, string, bool } from 'prop-types';
 import resolveLinkProps from '../../resolveLinkProps';
+import { useHistory } from '@magento/venia-drivers';
 
 /**
  * Page Builder ButtonItem component.
@@ -20,7 +20,6 @@ const ButtonItem = props => {
     const {
         buttonType,
         link,
-        linkType,
         openInNewTab = false,
         text,
         textAlign,
@@ -55,10 +54,11 @@ const ButtonItem = props => {
         paddingLeft
     };
 
+    const history = useHistory();
     let linkProps = {};
     let url = '';
     if (typeof link === 'string') {
-        linkProps = resolveLinkProps(link, linkType);
+        linkProps = resolveLinkProps(link);
         url = (linkProps.to ? linkProps.to : linkProps.href).trim();
     }
 
@@ -76,7 +76,7 @@ const ButtonItem = props => {
         if (openInNewTab) {
             window.open(url, '_blank');
         } else if (linkProps.to) {
-            props.history.push(url);
+            history.push(url);
         } else {
             window.location.assign(url);
         }
@@ -130,7 +130,6 @@ const ButtonItem = props => {
  * @property {String} paddingBottom CSS padding bottom property
  * @property {String} paddingLeft CSS padding left property
  * @property {Array} cssClasses List of CSS classes to be applied to the component
- * @property {Object} history User browsing history from withRouter function
  */
 ButtonItem.propTypes = {
     buttonType: oneOf(['primary', 'secondary', 'link']),
@@ -151,8 +150,7 @@ ButtonItem.propTypes = {
     paddingRight: string,
     paddingBottom: string,
     paddingLeft: string,
-    cssClasses: arrayOf(string),
-    history: object
+    cssClasses: arrayOf(string)
 };
 
-export default withRouter(ButtonItem);
+export default ButtonItem;

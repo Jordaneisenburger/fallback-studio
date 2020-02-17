@@ -7,22 +7,45 @@ import Button from '../Button';
 import Field from '../Field';
 import LoadingIndicator from '../LoadingIndicator';
 import TextInput from '../TextInput';
-import { isRequired } from '../../util/formValidators';
+import { isRequired, validateEmail } from '../../util/formValidators';
+import combine from '../../util/combineValidators';
 
 import defaultClasses from './signIn.css';
 import { useSignIn } from '@magento/peregrine/lib/talons/SignIn/useSignIn';
+import CREATE_CART_MUTATION from '../../queries/createCart.graphql';
+import GET_CUSTOMER_QUERY from '../../queries/getCustomer.graphql';
+import SIGN_IN_MUTATION from '../../queries/signIn.graphql';
+import GET_CART_DETAILS_QUERY from '../../queries/getCartDetails.graphql';
 
 const SignIn = props => {
     const classes = mergeClasses(defaultClasses, props.classes);
+    const { setDefaultUsername, showCreateAccount, showForgotPassword } = props;
+
+    const talonProps = useSignIn({
+        createCartMutation: CREATE_CART_MUTATION,
+        customerQuery: GET_CUSTOMER_QUERY,
+        getCartDetailsQuery: GET_CART_DETAILS_QUERY,
+        signInMutation: SIGN_IN_MUTATION,
+        setDefaultUsername,
+        showCreateAccount,
+        showForgotPassword
+    });
 
     const {
-        errorMessage,
+        errors,
         formRef,
         handleCreateAccount,
         handleForgotPassword,
         handleSubmit,
         isBusy
-    } = useSignIn(props);
+    } = talonProps;
+
+    // Map over any errors we get and display an appropriate error.
+    const errorMessage = errors.length
+        ? errors
+              .map(({ message }) => message)
+              .reduce((acc, msg) => msg + '\n' + acc, '')
+        : null;
 
     if (isBusy) {
         return (
@@ -43,7 +66,7 @@ const SignIn = props => {
                     <TextInput
                         autoComplete="email"
                         field="email"
-                        validate={isRequired}
+                        validate={combine([isRequired, validateEmail])}
                     />
                 </Field>
                 <Field label="Password" required={true}>

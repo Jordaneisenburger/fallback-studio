@@ -1,6 +1,6 @@
 {
     "name": "fallback-studio",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "description": "Fallback wrapper for Magento PWA Studio",
     "author": "Jordan Eisenburger",
     "homepage": "https://github.com/Jordaneisenburger/fallback-studio",
@@ -24,7 +24,7 @@
         "clean:all": "yarn workspaces run -s clean && rimraf ./node_modules",
         "clean:dist": "yarn workspaces run clean",
         "clone:pwa-studio": "cd src && git clone https://github.com/magento-research/pwa-studio.git",
-        "upgrade:pwa-studio": "rimraf src/pwa-studio && yarn run clone:pwa-studio && rimraf src/pwa-studio/.git && yarn install && yarn run build",
+        "upgrade:pwa-studio": "rimraf src/pwa-studio && yarn run clone:pwa-studio && rimraf src/pwa-studio/.git && yarn run setup",
         "build": "yarn venia run build && yarn example-shop run build",
         "build:dev": "yarn workspaces run build:dev",
         "setup": "yarn install && yarn run build",

@@ -58,6 +58,9 @@ async function configureWebpack({ context, vendor = [], special = {}, env }) {
     const babelConfigPresent = await checkForBabelConfig(context);
 
     const projectConfig = loadEnvironment(context);
+    if (projectConfig.error) {
+        throw projectConfig.error;
+    }
 
     const paths = {
         src: path.resolve(context, 'src'),
@@ -85,15 +88,15 @@ async function configureWebpack({ context, vendor = [], special = {}, env }) {
         context,
         babelConfigPresent,
         paths,
-        hasFlag
+        hasFlag,
+        projectConfig
     };
 
     const serviceWorkerConfig = getServiceWorkerConfig(configOptions);
 
     const clientConfig = await getClientConfig({
         ...configOptions,
-        vendor,
-        projectConfig
+        vendor
     });
 
     return { clientConfig, serviceWorkerConfig };

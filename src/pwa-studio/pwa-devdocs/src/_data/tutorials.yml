@@ -3,6 +3,9 @@ entries:
     - label: Overview
       url: /tutorials/
 
+    - label: Magento Cloud deployment
+      url: /tutorials/cloud-deploy/
+
     - label: Hello UPWARD
       entries:
           - label: Creating a simple server
@@ -14,5 +17,5 @@ entries:
           - label: Adding React
             url: /tutorials/hello-upward/adding-react/
 
-    - label: Magento Cloud deployment
-      url: /tutorials/cloud-deploy/
+    - label: Create a TagList component
+      url: /tutorials/create-taglist-component/
