@@ -6,7 +6,7 @@
 [pwa-studio]: https://img.shields.io/badge/pwa--studio-v4.0.0-brightgreen.svg
 [pwa-studio-url]: https://github.com/magento-research/pwa-studio
 
-# README is partially outdated will be updated soon!
+# DEPRECATED! You should check www.pwastudio.io on how to start a project
 
 # Fallback Studio
 
