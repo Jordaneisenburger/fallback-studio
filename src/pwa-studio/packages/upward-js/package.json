@@ -47,7 +47,7 @@
     "js-yaml": "~3.13.1",
     "lodash": "~4.17.11",
     "morgan": "~1.9.1",
-    "node-fetch": "~2.3.0",
+    "node-fetch": "~2.6.1",
     "shrink-ray-current": "~4.0.0"
   },
   "devDependencies": {
