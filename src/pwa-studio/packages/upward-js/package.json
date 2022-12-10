@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@magento/upward-spec": "~3.0.0",
-    "express": "~4.16.4",
+    "express": "~4.17.3",
     "supertest": "~3.4.2"
   },
   "peerDependencies": {
